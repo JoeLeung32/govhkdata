@@ -1,0 +1,22 @@
+.languageBar {
+  margin: 12px 32px;
+
+  button {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 5px;
+    cursor: pointer;
+    line-height: 100%;
+    margin: 0 2px;
+    padding: 8px 16px;
+
+    &:hover {
+      background-color: lightgoldenrodyellow;
+    }
+
+  }
+}
+
+.navBar {
+  margin: 12px 32px;
+}

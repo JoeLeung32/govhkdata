@@ -1,0 +1,12 @@
+<div class="languageBar">
+    <button (click)="changeLanguageAndUrl('en')">English</button>
+    <button (click)="changeLanguageAndUrl('tc')">繁體中文</button>
+    <button (click)="changeLanguageAndUrl('sc')">简体中文</button>
+</div>
+<div class="navBar">
+    <a (click)="router.navigate([currentLanguage])">{{'home'|translate}}</a>
+    &nbsp;
+    <a (click)="router.navigate([currentLanguage, 'about-us'])">{{'aboutUs'|translate}}</a>
+    &nbsp;
+    <a (click)="router.navigate([currentLanguage, 'test'])">Error Page</a>
+</div>
