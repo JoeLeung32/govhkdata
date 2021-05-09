@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
 import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
 import {ReplaySubject} from 'rxjs';
 import {take} from 'rxjs/operators';
@@ -18,7 +19,11 @@ export class LanguageService {
     constructor(
         private translateService: TranslateService,
         private router: Router,
+        private title: Title,
     ) {
+        this.translateService.onLangChange.subscribe(() => {
+            this.setPageTitle();
+        });
     }
 
     setInitState(): void {
@@ -27,12 +32,12 @@ export class LanguageService {
         if (this.urlHasLang) {
             this.setLang(this.urlLangCode);
         } else {
-            switch (!!this.translate.getBrowserCultureLang()) {
-                case ['zh-CN', 'zh-SG'].includes(this.translate.getBrowserCultureLang()): {
+            switch (!!this.translateService.getBrowserCultureLang()) {
+                case ['zh-CN', 'zh-SG'].includes(this.translateService.getBrowserCultureLang()): {
                     this.setUrlLang('sc');
                     break;
                 }
-                case ['zh-HK', 'zh-TW', 'zh'].includes(this.translate.getBrowserCultureLang()): {
+                case ['zh-HK', 'zh-TW', 'zh'].includes(this.translateService.getBrowserCultureLang()): {
                     this.setUrlLang('tc');
                     break;
                 }
@@ -69,5 +74,9 @@ export class LanguageService {
         this.urlHasLang = pathname.search(/^\/(en|tc|sc)/) === 0;
         this.urlLangCode = pathname.substr(1, 2);
         this.urlPathname = pathname.substr(4);
+    }
+
+    setPageTitle(): void {
+        this.title.setTitle(this.translateService.instant('webTitle'));
     }
 }
