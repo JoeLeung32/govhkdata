@@ -1,0 +1,24 @@
+$shadow: 0 0 10px rgba(0,0,0,.25);
+$primary-bg-color: #D9733E;
+$primary-bg-color-dark: #005660;
+$primary-bg-font-color: #fff;
+$primary-bg-font-color-dark: #fff;
+
+$colors: (
+        --primary-bg-color: ($primary-bg-color, $primary-bg-color-dark),
+        --primary-bg-font-color: ($primary-bg-font-color, $primary-bg-font-color-dark)
+);
+
+::ng-deep body {
+  &.light {
+    @each $name, $color in $colors {
+      #{$name}: nth($color, 1);
+    }
+  }
+
+  &.dark {
+    @each $name, $color in $colors {
+      #{$name}: nth($color, 2);
+    }
+  }
+}
