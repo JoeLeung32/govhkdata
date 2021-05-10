@@ -15,6 +15,7 @@ export class LanguageService {
     urlHasLang = false;
     urlLangCode = '';
     urlPathname = '';
+    urlSearch = {};
 
     constructor(
         private translateService: TranslateService,
@@ -57,23 +58,32 @@ export class LanguageService {
     }
 
     setUrlLang(lang: string): void {
+        const navigateCommands = [lang];
         this.translateService.onLangChange.pipe(take(1)).subscribe(result => {
             this.language$.next(result);
         });
         this.translateService.use(lang);
         this.detectUrlLang();
         if (this.urlPathname && this.urlPathname.toString().length) {
-            this.router.navigate([lang, this.urlPathname], {replaceUrl: true}).then(r => r);
-        } else {
-            this.router.navigate([lang], {replaceUrl: true}).then(r => r);
+            navigateCommands.push(this.urlPathname);
         }
+        this.router.navigate(navigateCommands, {
+            queryParams: this.urlSearch,
+            replaceUrl: true
+        }).then(r => r);
     }
 
     detectUrlLang(): void {
-        const {pathname} = window.location;
+        const {pathname, search} = window.location;
         this.urlHasLang = pathname.search(/^\/(en|tc|sc)/) === 0;
         this.urlLangCode = pathname.substr(1, 2);
         this.urlPathname = pathname.substr(4);
+        if (search && search.toString().length) {
+            search.toString().substr(1).split('&').forEach((param) => {
+                const [key, value] = param.split('=');
+                this.urlSearch[key] = value;
+            });
+        }
     }
 
     setPageTitle(): void {
