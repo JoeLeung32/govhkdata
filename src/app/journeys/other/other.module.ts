@@ -9,6 +9,7 @@ import {LanguageService} from '../../services/language.service';
 import {SharedModule} from '../../shared/shared.module';
 import {OtherRoutingModule} from './other-routing.module';
 import {AboutUsComponent} from './about-us/about-us.component';
+import { AboutProjectComponent } from './about-project/about-project.component';
 
 export function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoader {
     return new MultiTranslateHttpLoader(http, [
@@ -19,7 +20,8 @@ export function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoade
 
 @NgModule({
     declarations: [
-        AboutUsComponent
+        AboutUsComponent,
+        AboutProjectComponent,
     ],
     imports: [
         CommonModule,

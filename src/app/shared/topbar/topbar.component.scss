@@ -18,5 +18,14 @@
 }
 
 .navBar {
+  display: flex;
+  flex-wrap: wrap;
   margin: 12px 32px;
+
+  > div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 4px 8px;
+  }
 }
