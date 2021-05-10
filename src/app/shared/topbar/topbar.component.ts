@@ -31,7 +31,7 @@ export class TopbarComponent implements OnInit {
     }
 
     changeMode(mode: string): void {
-        this.themeService.setDark(mode);
+        this.themeService.set(mode);
     }
 
 }

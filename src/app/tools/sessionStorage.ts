@@ -1,23 +1,21 @@
-export class SessionStorage {
+import {SessionKeys} from '../types/enums';
 
-    languageKey = 'od-local';
+class SessionStorage {
 
     ss = sessionStorage;
 
     constructor() {
-        if (!this.ss.getItem(this.languageKey)) {
-            this.set(this.languageKey, '');
-        }
     }
 
-    set(key: string, value: any): void {
+    set(key: SessionKeys, value: any): void {
         if (typeof value !== 'string') {
             this.ss.setItem(key, JSON.stringify(value));
             return;
         }
+        this.ss.setItem(key, value);
     }
 
-    get(key: string): object | string {
+    get(key: SessionKeys): object | string {
         let data = this.ss.getItem(key);
         try {
             data = JSON.parse(data);
@@ -26,13 +24,9 @@ export class SessionStorage {
             return data;
         }
     }
-
-    setLang(value: string): void {
-        this.ss.setItem(this.languageKey, value);
-    }
-
-    getLang(): string | null {
-        const value = this.ss.getItem(this.languageKey);
-        return value && value.toString().length ? value : null;
-    }
 }
+
+export {
+    SessionKeys,
+    SessionStorage
+};

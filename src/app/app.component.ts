@@ -23,7 +23,7 @@ export class AppComponent {
 
     initial(): void {
         this.languageService.setInitState();
-        this.themeService.detect();
+        this.themeService.initial();
     }
 
 }
