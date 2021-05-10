@@ -16,6 +16,7 @@ export class LanguageService {
     urlLangCode = '';
     urlPathname = '';
     urlSearch = {};
+    basicTitleArray = ['webTitle'];
 
     constructor(
         private translateService: TranslateService,
@@ -86,7 +87,24 @@ export class LanguageService {
         }
     }
 
-    setPageTitle(): void {
-        this.title.setTitle(this.translateService.instant('webTitle'));
+    setPageTitle(arr?: Array<string>): void {
+        let titleArray = [];
+        if (arr && arr.length) {
+            arr.forEach((code) => {
+                this.basicTitleArray.push(code);
+            });
+        }
+        titleArray = Array.from(new Set(this.basicTitleArray));
+        if (titleArray && titleArray.length) {
+            titleArray.forEach((code, idx) => {
+                titleArray[idx] = this.translateService.instant(code);
+            });
+        }
+        this.title.setTitle(titleArray.reverse().join(' - '));
+    }
+
+    resetPageTitle(): void {
+        this.basicTitleArray = ['webTitle'];
+        this.setPageTitle();
     }
 }
