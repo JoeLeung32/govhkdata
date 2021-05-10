@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, Renderer2, RendererFactory2} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {LanguageService} from '../../services/language.service';
@@ -13,6 +14,7 @@ import {faMoon as faBorderMoon} from '@fortawesome/free-regular-svg-icons';
 })
 export class TopbarComponent implements OnInit {
 
+    private renderer: Renderer2;
     themeModeIcon;
     menuIcon = faGlobeAmericas;
 
@@ -21,7 +23,10 @@ export class TopbarComponent implements OnInit {
         public translateService: TranslateService,
         public languageService: LanguageService,
         public themeService: ThemeService,
+        private rendererFactory: RendererFactory2,
+        @Inject(DOCUMENT) private document
     ) {
+        this.renderer = rendererFactory.createRenderer(null, null);
     }
 
     get currentLanguage(): string {
@@ -40,10 +45,10 @@ export class TopbarComponent implements OnInit {
 
     changeLanguageAndUrl(lang: string): void {
         this.languageService.setUrlLang(lang);
+        this.renderer.setProperty(document.getElementById('localMenu'), 'checked', false);
     }
 
     changeMode(): void {
-
         this.themeService.set(this.themeService.themeMode.getValue() === ThemeModeType.dark ? ThemeModeType.light : ThemeModeType.dark);
     }
 

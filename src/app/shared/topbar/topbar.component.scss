@@ -37,16 +37,15 @@
       }
     }
 
-    .btnMenu {
+    .btnLocal {
       display: block;
-      padding: 8px;
       position: relative;
 
       label {
         cursor: pointer;
       }
 
-      .menu {
+      .localMenu {
         background-color: var(--primary-bg-color);
         border-radius: 5px;
         box-shadow: $shadow;
@@ -57,7 +56,7 @@
         overflow: hidden;
         position: absolute;
         right: 0;
-        top: 40px;
+        top: 30px;
 
         > span {
           background: transparent;
@@ -79,7 +78,7 @@
       [type="checkbox"] {
         display: none;
 
-        &:checked + .menu {
+        &:checked + .localMenu {
           display: flex;
         }
       }
