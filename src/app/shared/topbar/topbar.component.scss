@@ -1,51 +1,38 @@
 @import "src/assets/themes/default";
 
-::ng-deep body {
-    &.light {
-        .topbar {
-            background-color: $primary-color-light;
-        }
-    }
-
-    &.dark {
-        .topbar {
-            background-color: $primary-color-dark;
-        }
-    }
-}
-
 .topbar {
-    min-height: 60px;
+  background-color: var(--primary-bg-color);
+  min-height: 60px;
 }
 
 .languageBar {
-    margin: 12px 32px;
+  margin: 12px 32px;
 
-    button {
-        background-color: #fff;
-        border: 1px solid rgba(0, 0, 0, .15);
-        border-radius: 5px;
-        cursor: pointer;
-        line-height: 100%;
-        margin: 0 2px;
-        padding: 8px 16px;
+  button {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 5px;
+    cursor: pointer;
+    line-height: 100%;
+    margin: 0 2px;
+    padding: 8px 16px;
 
-        &:hover {
-            background-color: lightgoldenrodyellow;
-        }
-
+    &:hover {
+      background-color: lightgoldenrodyellow;
     }
+
+  }
 }
 
 .navBar {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 12px 32px;
+
+  > div {
     display: flex;
     flex-wrap: wrap;
-    margin: 12px 32px;
-
-    > div {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        padding: 4px 8px;
-    }
+    flex-direction: column;
+    padding: 4px 8px;
+  }
 }
