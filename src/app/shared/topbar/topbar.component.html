@@ -12,7 +12,10 @@
                 </div>
             </ng-container>
             <div class="btnMenu">
-                <fa-icon [icon]="menuIcon"></fa-icon>
+                <label for="menu">
+                    <fa-icon [icon]="menuIcon"></fa-icon>
+                </label>
+                <input id="menu" type="checkbox">
                 <div class="menu">
                     <span (click)="changeLanguageAndUrl('en')">English</span>
                     <span (click)="changeLanguageAndUrl('tc')">繁體中文</span>
