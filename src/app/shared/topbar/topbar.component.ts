@@ -8,48 +8,48 @@ import {faGlobeAmericas, faMoon} from '@fortawesome/free-solid-svg-icons';
 import {faMoon as faBorderMoon} from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-    selector: 'app-topbar',
-    templateUrl: './topbar.component.html',
-    styleUrls: ['./topbar.component.scss']
+  selector: 'app-topbar',
+  templateUrl: './topbar.component.html',
+  styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent implements OnInit {
 
-    private renderer: Renderer2;
-    themeModeIcon;
-    menuIcon = faGlobeAmericas;
+  themeModeIcon;
+  menuIcon = faGlobeAmericas;
+  private renderer: Renderer2;
 
-    constructor(
-        public router: Router,
-        public translateService: TranslateService,
-        public languageService: LanguageService,
-        public themeService: ThemeService,
-        private rendererFactory: RendererFactory2,
-        @Inject(DOCUMENT) private document
-    ) {
-        this.renderer = rendererFactory.createRenderer(null, null);
-    }
+  constructor(
+    public router: Router,
+    public translateService: TranslateService,
+    public languageService: LanguageService,
+    public themeService: ThemeService,
+    private rendererFactory: RendererFactory2,
+    @Inject(DOCUMENT) private document
+  ) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+  }
 
-    get currentLanguage(): string {
-        return this.languageService.translate.currentLang;
-    }
+  get currentLanguage(): string {
+    return this.languageService.translate.currentLang;
+  }
 
-    ngOnInit(): void {
-        this.themeService.themeMode.subscribe((data) => {
-            if (data === ThemeModeType.dark) {
-                this.themeModeIcon = faMoon;
-            } else {
-                this.themeModeIcon = faBorderMoon;
-            }
-        });
-    }
+  ngOnInit(): void {
+    this.themeService.themeMode.subscribe((data) => {
+      if (data === ThemeModeType.dark) {
+        this.themeModeIcon = faMoon;
+      } else {
+        this.themeModeIcon = faBorderMoon;
+      }
+    });
+  }
 
-    changeLanguageAndUrl(lang: string): void {
-        this.languageService.setUrlLang(lang);
-        this.renderer.setProperty(document.getElementById('localMenu'), 'checked', false);
-    }
+  changeLanguageAndUrl(lang: string): void {
+    this.languageService.setUrlLang(lang);
+    this.renderer.setProperty(document.getElementById('localMenu'), 'checked', false);
+  }
 
-    changeMode(): void {
-        this.themeService.set(this.themeService.themeMode.getValue() === ThemeModeType.dark ? ThemeModeType.light : ThemeModeType.dark);
-    }
+  changeMode(): void {
+    this.themeService.set(this.themeService.themeMode.getValue() === ThemeModeType.dark ? ThemeModeType.light : ThemeModeType.dark);
+  }
 
 }

@@ -1,14 +1,31 @@
-$shadow: 0 0 10px rgba(0,0,0,.25);
+// colors
 $primary-bg-color: #D9733E;
 $primary-bg-color-dark: #005660;
 $primary-bg-font-color: #fff;
 $primary-bg-font-color-dark: #fff;
+$secondary-bg-color: #f6f6f6;
+$secondary-bg-color-dark: #eaeaea;
+$secondary-bg-font-color: #bbb;
+$secondary-bg-font-color-dark: #999;
+//$tertiary-bg-color:
 
+// font
+$font-size-standard: 1em;
+$font-size-footer: .75em;
+
+// others
+$topBarHeight: 60px;
+$leftRightSpacing: 24px;
+
+// code gen
 $colors: (
         --primary-bg-color: ($primary-bg-color, $primary-bg-color-dark),
-        --primary-bg-font-color: ($primary-bg-font-color, $primary-bg-font-color-dark)
+        --primary-bg-font-color: ($primary-bg-font-color, $primary-bg-font-color-dark),
+        --secondary-bg-color: ($secondary-bg-color, $secondary-bg-color-dark),
+        --secondary-bg-font-color: ($secondary-bg-font-color, $secondary-bg-font-color-dark),
 );
 
+// schema
 ::ng-deep body {
   &.light {
     @each $name, $color in $colors {
@@ -21,4 +38,30 @@ $colors: (
       #{$name}: nth($color, 2);
     }
   }
+}
+
+// mixin
+@mixin page-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  min-height: calc(100vh - #{$topBarHeight});
+
+  .auto-grow {
+    flex-grow: 1;
+  }
+}
+
+@mixin box-shadow {
+  box-shadow: 0 0 10px rgba(0,0,0,.25);
+}
+
+@mixin flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@mixin flex-wrap-align-items-center {
+  @include flex-wrap;
+  align-items: center;
 }

@@ -1,27 +1,22 @@
 @import "src/assets/themes/default";
 
 .topbar {
+  @include flex-wrap-align-items-center;
   background-color: var(--primary-bg-color);
   color: var(--primary-bg-font-color);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  font-size: $font-size-standard;
   position: relative;
   z-index: 1;
-  min-height: 60px;
+  min-height: $topBarHeight;
 
   > .wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    @include flex-wrap-align-items-center;
     justify-content: space-between;
     flex-grow: 1;
-    margin: 0 24px;
+    margin: 0 $leftRightSpacing;
 
     > div {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
+      @include flex-wrap-align-items-center;
 
       > div {
         cursor: pointer;
@@ -46,9 +41,9 @@
       }
 
       .localMenu {
+        @include box-shadow;
         background-color: var(--primary-bg-color);
         border-radius: 5px;
-        box-shadow: $shadow;
         display: none;
         flex-wrap: wrap;
         flex-direction: row;
