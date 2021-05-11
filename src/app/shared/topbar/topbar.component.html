@@ -1,27 +1,27 @@
 <div class="topbar">
-    <div class="wrapper">
-        <div>
-            <a (click)="router.navigate([currentLanguage])">
-                {{'webTitle'|translate}}
-            </a>
-        </div>
-        <div>
-            <ng-container *ngIf="themeModeIcon">
-                <div class="btnThemSwitch" (click)="changeMode()">
-                    <fa-icon [icon]="themeModeIcon"></fa-icon>
-                </div>
-            </ng-container>
-            <div class="btnLocal">
-                <label for="localMenu">
-                    <fa-icon [icon]="menuIcon"></fa-icon>
-                </label>
-                <input id="localMenu" type="checkbox">
-                <div class="localMenu">
-                    <span (click)="changeLanguageAndUrl('en')">English</span>
-                    <span (click)="changeLanguageAndUrl('tc')">繁體中文</span>
-                    <span (click)="changeLanguageAndUrl('sc')">简体中文</span>
-                </div>
-            </div>
-        </div>
+  <div class="wrapper">
+    <div>
+      <a (click)="router.navigate([currentLanguage])">
+        {{'webTitle'|translate}}
+      </a>
     </div>
+    <div>
+      <ng-container *ngIf="themeModeIcon">
+        <div (click)="changeMode()" class="btnThemSwitch">
+          <fa-icon [icon]="themeModeIcon"></fa-icon>
+        </div>
+      </ng-container>
+      <div class="btnLocal">
+        <label for="localMenu">
+          <fa-icon [icon]="menuIcon"></fa-icon>
+        </label>
+        <input id="localMenu" type="checkbox">
+        <div class="localMenu">
+          <span (click)="changeLanguageAndUrl('en')">English</span>
+          <span (click)="changeLanguageAndUrl('tc')">繁體中文</span>
+          <span (click)="changeLanguageAndUrl('sc')">简体中文</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

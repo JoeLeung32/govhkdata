@@ -1,0 +1,33 @@
+@import "src/assets/themes/default.scss";
+
+footer {
+  background-color: var(--secondary-bg-color);
+  color: var(--secondary-bg-font-color);
+  font-size: $font-size-footer;
+  letter-spacing: .025em;
+  line-height: 150%;
+  overflow: auto;
+  padding: 0 $leftRightSpacing;
+
+  a {
+    color: var(--secondary-bg-font-color);
+    text-decoration: none;
+  }
+
+  span {
+    margin: 0 .2em;
+  }
+
+  > div {
+    margin: 12px 0;
+  }
+
+  .copyright {
+    &-source {
+      &-data {
+        @include flex-wrap-align-items-center;
+        justify-content: space-between;
+      }
+    }
+  }
+}

@@ -1,5 +1,9 @@
 {
   "webTitle": "HK Gov Open Data",
+  "webAuthor": "ChunKit.HK",
+  "dataSource:": "Data Source:",
+  "copyright": "Copyright",
+  "rightsReserved": "No rights reserved.",
   "home": "Index",
   "aboutUs": "About us"
 }

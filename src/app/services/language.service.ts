@@ -6,105 +6,105 @@ import {ReplaySubject} from 'rxjs';
 import {take} from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class LanguageService {
 
-    language$ = new ReplaySubject<LangChangeEvent>(1);
-    translate = this.translateService;
-    urlHasLang = false;
-    urlLangCode = '';
-    urlPathname = '';
-    urlSearch = {};
-    basicTitleArray = ['webTitle'];
+  language$ = new ReplaySubject<LangChangeEvent>(1);
+  translate = this.translateService;
+  urlHasLang = false;
+  urlLangCode = '';
+  urlPathname = '';
+  urlSearch = {};
+  basicTitleArray = ['webTitle'];
 
-    constructor(
-        private translateService: TranslateService,
-        private router: Router,
-        private title: Title,
-    ) {
-        this.translateService.onLangChange.subscribe(() => {
-            this.setPageTitle();
-        });
-    }
+  constructor(
+    private translateService: TranslateService,
+    private router: Router,
+    private title: Title,
+  ) {
+    this.translateService.onLangChange.subscribe(() => {
+      this.setPageTitle();
+    });
+  }
 
-    setInitState(): void {
-        this.translateService.addLangs(['en', 'tc', 'sc']);
-        this.detectUrlLang();
-        if (this.urlHasLang) {
-            this.setLang(this.urlLangCode);
-        } else {
-            switch (!!this.translateService.getBrowserCultureLang()) {
-                case ['zh-CN', 'zh-SG'].includes(this.translateService.getBrowserCultureLang()): {
-                    this.setUrlLang('sc');
-                    break;
-                }
-                case ['zh-HK', 'zh-TW', 'zh'].includes(this.translateService.getBrowserCultureLang()): {
-                    this.setUrlLang('tc');
-                    break;
-                }
-                default: {
-                    this.setUrlLang('en');
-                    break;
-                }
-            }
+  setInitState(): void {
+    this.translateService.addLangs(['en', 'tc', 'sc']);
+    this.detectUrlLang();
+    if (this.urlHasLang) {
+      this.setLang(this.urlLangCode);
+    } else {
+      switch (!!this.translateService.getBrowserCultureLang()) {
+        case ['zh-CN', 'zh-SG'].includes(this.translateService.getBrowserCultureLang()): {
+          this.setUrlLang('sc');
+          break;
         }
-    }
-
-    setLang(lang: string): void {
-        this.translateService.onLangChange.pipe(take(1)).subscribe(result => {
-            this.language$.next(result);
-        });
-        this.translateService.use(lang);
-    }
-
-    setUrlLang(lang: string): void {
-        const navigateCommands = [lang];
-        this.translateService.onLangChange.pipe(take(1)).subscribe(result => {
-            this.language$.next(result);
-        });
-        this.translateService.use(lang);
-        this.detectUrlLang();
-        if (this.urlPathname && this.urlPathname.toString().length) {
-            navigateCommands.push(this.urlPathname);
+        case ['zh-HK', 'zh-TW', 'zh'].includes(this.translateService.getBrowserCultureLang()): {
+          this.setUrlLang('tc');
+          break;
         }
-        this.router.navigate(navigateCommands, {
-            queryParams: this.urlSearch,
-            replaceUrl: true
-        }).then(r => r);
-    }
-
-    detectUrlLang(): void {
-        const {pathname, search} = window.location;
-        this.urlHasLang = pathname.search(/^\/(en|tc|sc)/) === 0;
-        this.urlLangCode = pathname.substr(1, 2);
-        this.urlPathname = pathname.substr(4);
-        if (search && search.toString().length) {
-            search.toString().substr(1).split('&').forEach((param) => {
-                const [key, value] = param.split('=');
-                this.urlSearch[key] = value;
-            });
+        default: {
+          this.setUrlLang('en');
+          break;
         }
+      }
     }
+  }
 
-    setPageTitle(arr?: Array<string>): void {
-        let titleArray = [];
-        if (arr && arr.length) {
-            arr.forEach((code) => {
-                this.basicTitleArray.push(code);
-            });
-        }
-        titleArray = Array.from(new Set(this.basicTitleArray));
-        if (titleArray && titleArray.length) {
-            titleArray.forEach((code, idx) => {
-                titleArray[idx] = this.translateService.instant(code);
-            });
-        }
-        this.title.setTitle(titleArray.reverse().join(' - '));
-    }
+  setLang(lang: string): void {
+    this.translateService.onLangChange.pipe(take(1)).subscribe(result => {
+      this.language$.next(result);
+    });
+    this.translateService.use(lang);
+  }
 
-    resetPageTitle(): void {
-        this.basicTitleArray = ['webTitle'];
-        this.setPageTitle();
+  setUrlLang(lang: string): void {
+    const navigateCommands = [lang];
+    this.translateService.onLangChange.pipe(take(1)).subscribe(result => {
+      this.language$.next(result);
+    });
+    this.translateService.use(lang);
+    this.detectUrlLang();
+    if (this.urlPathname && this.urlPathname.toString().length) {
+      navigateCommands.push(this.urlPathname);
     }
+    this.router.navigate(navigateCommands, {
+      queryParams: this.urlSearch,
+      replaceUrl: true
+    }).then(r => r);
+  }
+
+  detectUrlLang(): void {
+    const {pathname, search} = window.location;
+    this.urlHasLang = pathname.search(/^\/(en|tc|sc)/) === 0;
+    this.urlLangCode = pathname.substr(1, 2);
+    this.urlPathname = pathname.substr(4);
+    if (search && search.toString().length) {
+      search.toString().substr(1).split('&').forEach((param) => {
+        const [key, value] = param.split('=');
+        this.urlSearch[key] = value;
+      });
+    }
+  }
+
+  setPageTitle(arr?: Array<string>): void {
+    let titleArray = [];
+    if (arr && arr.length) {
+      arr.forEach((code) => {
+        this.basicTitleArray.push(code);
+      });
+    }
+    titleArray = Array.from(new Set(this.basicTitleArray));
+    if (titleArray && titleArray.length) {
+      titleArray.forEach((code, idx) => {
+        titleArray[idx] = this.translateService.instant(code);
+      });
+    }
+    this.title.setTitle(titleArray.reverse().join(' - '));
+  }
+
+  resetPageTitle(): void {
+    this.basicTitleArray = ['webTitle'];
+    this.setPageTitle();
+  }
 }

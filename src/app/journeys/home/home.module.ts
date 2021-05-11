@@ -11,39 +11,39 @@ import {HomeRoutingModule} from './home-routing.module';
 import {HomepageComponent} from './homepage/homepage.component';
 
 export function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoader {
-    return new MultiTranslateHttpLoader(http, [
-        {prefix: './assets/i18n/', suffix: '.json'},
-        {prefix: './assets/i18n/home/', suffix: '.json'},
-    ]);
+  return new MultiTranslateHttpLoader(http, [
+    {prefix: './assets/i18n/', suffix: '.json'},
+    {prefix: './assets/i18n/home/', suffix: '.json'},
+  ]);
 }
 
 @NgModule({
-    declarations: [
-        HomepageComponent
-    ],
-    imports: [
-        CommonModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: createTranslateLoader,
-                deps: [HttpClient]
-            },
-            isolate: true
-        }),
-        SharedModule,
-        HomeRoutingModule
-    ]
+  declarations: [
+    HomepageComponent
+  ],
+  imports: [
+    CommonModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      },
+      isolate: true
+    }),
+    SharedModule,
+    HomeRoutingModule
+  ]
 })
 export class HomeModule {
 
-    language$ = this.languageService.language$;
+  language$ = this.languageService.language$;
 
-    constructor(
-        private translateService: TranslateService,
-        private languageService: LanguageService,
-    ) {
-        this.language$.pipe(map(language => language.lang))
-            .subscribe(lang => this.translateService.use(lang));
-    }
+  constructor(
+    private translateService: TranslateService,
+    private languageService: LanguageService,
+  ) {
+    this.language$.pipe(map(language => language.lang))
+      .subscribe(lang => this.translateService.use(lang));
+  }
 }
