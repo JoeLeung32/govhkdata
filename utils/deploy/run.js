@@ -1,11 +1,10 @@
 const {FTP, FS} = require('./core')
 
 try {
-  const DIST = new FS()
-  const JOB = new FTP()
-  const list = DIST.scan('./dist/govhkdata')
-  JOB.autoDeploy(list)
-  console.log('~>Ran')
+    const dirname = './dist/govhkdata'
+    const DIST = new FS()
+    const JOB = new FTP()
+    JOB.autoDeploy(DIST.scan(dirname))
 } catch (e) {
-  console.error(e)
+    console.error(e)
 }
