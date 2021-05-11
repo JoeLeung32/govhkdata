@@ -106,6 +106,12 @@ class FTP {
 class FS {
     #list = []
 
+    setDateMarker(dirname) {
+        const date = new Date().toISOString();
+        const filename = `${dirname}/${date}.upload`;
+        fs.writeFileSync(filename, '');
+    }
+
     scan(dirname, remoteParentPath) {
         if (!fs.existsSync(dirname)) {
             throw `${dirname} not exist`
