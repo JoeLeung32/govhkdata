@@ -65,13 +65,40 @@ export class ChangelogDetailComponent implements OnInit {
           this.mdContent = this.markdownService.compile(content.join('\r\n'));
         };
         this.markdownService.getSource(`mds/${year}/${month}/${filename}.${lang}.md`).subscribe({
-          next: process,
+          next: data => {
+            if (data.substr(0, 3) === '---') {
+              process(data);
+            } else {
+              this.markdownService.getSource(`mds/${year}/${month}/${filename}.md`).subscribe({
+                next: data2 => {
+                  if (data2.substr(0, 3) === '---') {
+                    process(data2);
+                  } else {
+                    this.mdMeta = {};
+                    this.mdContent = this.markdownService.compile('# Content Not Found');
+                  }
+                },
+                error: () => {
+                  this.mdMeta = {};
+                  this.mdContent = this.markdownService.compile('# Content Not Found');
+                }
+              });
+            }
+          },
           error: err => {
             const {status} = err;
             if (status !== 200) {
               this.markdownService.getSource(`mds/${year}/${month}/${filename}.md`).subscribe({
-                next: process,
+                next: data2 => {
+                  if (data2.substr(0, 3) === '---') {
+                    process(data2);
+                  } else {
+                    this.mdMeta = {};
+                    this.mdContent = this.markdownService.compile('# Content Not Found');
+                  }
+                },
                 error: () => {
+                  this.mdMeta = {};
                   this.mdContent = this.markdownService.compile('# Content Not Found');
                 }
               });
