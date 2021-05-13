@@ -1,5 +1,31 @@
-{
-  "categories": [
-    "uncategorized"
-  ]
-}
+[
+  {
+    "title": "uncategorized",
+    "urlEncode": "uncategorized",
+    "link": [
+      "2021/05/Goodbye.en.md",
+      "2021/05/HelloWorld.md"
+    ]
+  },
+  {
+    "title": "yo man",
+    "urlEncode": "yo%20man",
+    "link": [
+      "2021/05/Goodbye.en.md"
+    ]
+  },
+  {
+    "title": "dummy",
+    "urlEncode": "dummy",
+    "link": [
+      "2021/05/HelloWorld.md"
+    ]
+  },
+  {
+    "title": "dummy4",
+    "urlEncode": "dummy4",
+    "link": [
+      "2021/05/Oh No.md"
+    ]
+  }
+]

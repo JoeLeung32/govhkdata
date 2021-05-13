@@ -1,7 +1,7 @@
 ---
 title: Goodbye
-category: uncategorized, dummy
-tag: Demo, Sample tag
+category: uncategorized, yo man
+tag: Demo2, Sample tag
 date: 2021-05-13
 ---
 **Good** _Bye_

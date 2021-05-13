@@ -107,9 +107,8 @@ class FS {
     #list = []
 
     setDateMarker(dirname) {
-        const date = new Date().toISOString();
-        const filename = `${dirname}/${date}.upload`;
-        fs.writeFileSync(filename, '');
+        const filename = `${dirname}/${new Date().toISOString()}.upload`
+        fs.writeFileSync(filename, new Date().toLocaleString())
     }
 
     scan(dirname, remoteParentPath) {

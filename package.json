@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "npm run build && node utils/deploy/run.js"
+    "scanMD": "node utils/markdown/run.js",
+    "deploy": "npm run scanMD && npm run build && node utils/deploy/run.js"
   },
   "private": true,
   "dependencies": {
