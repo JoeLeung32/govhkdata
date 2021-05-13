@@ -3,7 +3,7 @@
     "title": "Demo2",
     "urlEncode": "Demo2",
     "link": [
-      "2021/05/Goodbye.en.md",
+      "2021/05/Goodbye",
       "2021/05/Oh No.md"
     ]
   },
@@ -11,7 +11,7 @@
     "title": "Sample tag",
     "urlEncode": "Sample%20tag",
     "link": [
-      "2021/05/Goodbye.en.md",
+      "2021/05/Goodbye",
       "2021/05/HelloWorld.md"
     ]
   },

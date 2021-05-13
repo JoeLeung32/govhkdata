@@ -7,6 +7,7 @@ class FS {
             date: '',
             category: [],
             tag: [],
+            langCode: [],
             localPath: '',
             remotePath: '',
         },
@@ -33,7 +34,7 @@ class FS {
             throw `${dirname} not exist`
         }
         fs.readdirSync(dirname).forEach(filename => {
-            if (['_meta'].includes(filename)) return
+            if (['.DS_Store', '_meta'].includes(filename)) return
             const address = `${dirname}/`
             const fileLocalPath = `${address}${filename}`
             let fileRemotePath = fileLocalPath.replace(address, '')
@@ -41,16 +42,29 @@ class FS {
                 fileRemotePath = [remoteParentPath, fileRemotePath].join('/')
             }
             const meta = {...this.#structure.mdDocument}
-            meta.title = filename
             meta.localPath = fileLocalPath
-            meta.remotePath = fileRemotePath
+            meta.remotePath = fileRemotePath.replace(/(.en|.tc|.sc).md/i, '')
+            if (fileRemotePath.match(/(.en|.tc|.sc).md/i)) {
+                meta.langCode = [fileRemotePath.match(/(.en|.tc|.sc).md/i)[1].substr(1,2)]
+            } else {
+                meta.langCode = null
+            }
             switch (true) {
                 case fs.lstatSync(fileLocalPath).isDirectory(): {
                     this.scan(fileLocalPath, fileRemotePath)
                     break
                 }
                 case fs.lstatSync(fileLocalPath).isFile(): {
-                    this.#md.documents.push(meta)
+                    const existIndex = this.#md.documents.findIndex(md => md.remotePath === meta.remotePath);
+                    console.log(existIndex)
+                    if (existIndex < 0) {
+                        this.#md.documents.push(meta)
+                    } else {
+                        this.#md.documents[existIndex].langCode = [
+                            ...this.#md.documents[existIndex].langCode,
+                            ...meta.langCode,
+                        ]
+                    }
                     break
                 }
             }
@@ -74,8 +88,8 @@ class FS {
                 }
                 if (metaStart) {
                     const [key, value] = line.split(':')
-                    if (['date'].includes(key)) {
-                        this.#md.documents[idx][key] = value
+                    if (['title', 'date'].includes(key)) {
+                        this.#md.documents[idx][key] = value.trim()
                         return
                     }
                     if (['category', 'tag'].includes(key)) {
@@ -119,7 +133,7 @@ class FS {
         if (!data || !data.length) {
             return
         }
-        fs.writeFileSync(path, JSON.stringify(data, null, 2));
+        fs.writeFileSync(path, JSON.stringify(data, null, 2))
     }
 
 }

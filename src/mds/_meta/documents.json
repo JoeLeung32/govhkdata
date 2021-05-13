@@ -1,15 +1,7 @@
 [
   {
-    "title": ".DS_Store",
-    "date": "",
-    "category": [],
-    "tag": [],
-    "localPath": "./src/mds/.DS_Store",
-    "remotePath": ".DS_Store"
-  },
-  {
-    "title": "Goodbye.en.md",
-    "date": " 2021-05-13",
+    "title": "Goodbye",
+    "date": "2021-05-13",
     "category": [
       "uncategorized",
       "yo man"
@@ -18,12 +10,16 @@
       "Demo2",
       "Sample tag"
     ],
+    "langCode": [
+      "en",
+      "tc"
+    ],
     "localPath": "./src/mds/2021/05/Goodbye.en.md",
-    "remotePath": "2021/05/Goodbye.en.md"
+    "remotePath": "2021/05/Goodbye"
   },
   {
-    "title": "HelloWorld.md",
-    "date": " 2021-05-13",
+    "title": "Hello World",
+    "date": "2021-05-13",
     "category": [
       "uncategorized",
       "dummy"
@@ -32,18 +28,20 @@
       "Demo",
       "Sample tag"
     ],
+    "langCode": null,
     "localPath": "./src/mds/2021/05/HelloWorld.md",
     "remotePath": "2021/05/HelloWorld.md"
   },
   {
-    "title": "Oh No.md",
-    "date": " 2021-05-13",
+    "title": "Oh No",
+    "date": "2021-05-13",
     "category": [
       "dummy4"
     ],
     "tag": [
       "Demo2"
     ],
+    "langCode": null,
     "localPath": "./src/mds/2021/05/Oh No.md",
     "remotePath": "2021/05/Oh No.md"
   }
