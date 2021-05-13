@@ -59,14 +59,14 @@ export class LanguageService {
   }
 
   setUrlLang(lang: string): void {
-    const navigateCommands = [lang];
+    let navigateCommands = [lang];
     this.translateService.onLangChange.pipe(take(1)).subscribe(result => {
       this.language$.next(result);
     });
     this.translateService.use(lang);
     this.detectUrlLang();
     if (this.urlPathname && this.urlPathname.toString().length) {
-      navigateCommands.push(this.urlPathname);
+      navigateCommands = [lang, ...this.urlPathname.split('/')];
     }
     this.router.navigate(navigateCommands, {
       queryParams: this.urlSearch,
