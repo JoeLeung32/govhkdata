@@ -1,0 +1,19 @@
+<app-page-wrapper [footer]="true">
+  <ol>
+    <li>
+      <a [routerLink]="['/', language, 'changelog', 'read', '2021', '05', 'HelloWorld']">
+        HelloWorld
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['/', language, 'changelog', 'read', '2021', '05', 'Goodbye']">
+        Goodbye
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['/', language, 'changelog', 'read', '2021', '99', 'dummy']">
+        Fake data
+      </a>
+    </li>
+  </ol>
+</app-page-wrapper>

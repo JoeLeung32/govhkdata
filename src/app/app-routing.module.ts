@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./journeys/home/home.module').then(m => m.HomeModule)
   },
   {
+    path: ':lang/changelog',
+    loadChildren: () => import('./journeys/changelog/changelog.module').then(m => m.ChangelogModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./journeys/error/error.module').then(m => m.ErrorModule)
   },

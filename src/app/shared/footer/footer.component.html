@@ -1,6 +1,18 @@
 <footer>
+  <div class="links">
+    <div>
+      <ul>
+        <li>
+          <a [routerLink]="['/', language, 'changelog']">
+            {{'changelog'|translate}}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
   <div class="copyright-self">
-    <span>{{'copyright'|translate}} <fa-icon [icon]="copyrightIcon"></fa-icon> 2021</span>
+    <span>{{'copyright'|translate}}
+      <fa-icon [icon]="copyrightIcon"></fa-icon> 2021</span>
     <span>{{'webAuthor'|translate}}</span>
     <span>{{'rightsReserved'|translate}}</span>
   </div>
@@ -10,7 +22,8 @@
       <a href="https://data.gov.hk/" target="_blank" rel="noopener noreferrer">https://data.gov.hk/</a>
     </span>
     <span>
-      <a href="https://github.com/JoeLeung32/govhkdata" target="_blank" rel="noopener noreferrer"><fa-icon [icon]="githubIcon"></fa-icon></a>
+      <a href="https://github.com/JoeLeung32/govhkdata" target="_blank" rel="noopener noreferrer"><fa-icon
+        [icon]="githubIcon"></fa-icon></a>
     </span>
   </div>
 </footer>
