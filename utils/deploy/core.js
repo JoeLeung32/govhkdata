@@ -67,7 +67,7 @@ class FTP {
         })
     }
 
-    taskUpload(list) {
+    async taskUpload(list) {
         return new Promise((resolve, reject) => {
             if (!list || !list.length) reject('list is empty')
             list.filter(d => d.type === 'd').forEach(async (d) => {
