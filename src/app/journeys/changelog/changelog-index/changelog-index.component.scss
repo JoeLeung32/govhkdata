@@ -1,0 +1,26 @@
+@import "src/assets/themes/default";
+
+.wrapper {
+  @include flex-wrap;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  .main {
+    flex: 2;
+
+    > div {
+      margin-left: $leftRightSpacing;
+      margin-right: $leftRightSpacing / 2;
+    }
+  }
+
+  .sidebar {
+    flex: 1;
+
+    > div {
+      margin-left: $leftRightSpacing / 2;
+      margin-right: $leftRightSpacing;
+    }
+  }
+}

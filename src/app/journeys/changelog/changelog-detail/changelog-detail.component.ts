@@ -5,113 +5,80 @@ import {MarkdownService} from 'ngx-markdown';
 import {LanguageService} from '../../../services/language.service';
 
 interface Meta {
-  title?: string;
-  category?: string[];
-  tag?: string[];
-  date?: string;
+    title?: string;
+    category?: string[];
+    tag?: string[];
+    date?: string;
 }
 
 @Component({
-  selector: 'app-changelog-detail',
-  templateUrl: './changelog-detail.component.html',
-  styleUrls: ['./changelog-detail.component.scss']
+    selector: 'app-changelog-detail',
+    templateUrl: './changelog-detail.component.html',
+    styleUrls: ['./changelog-detail.component.scss']
 })
 export class ChangelogDetailComponent implements OnInit {
 
-  language = this.languageService.translate.currentLang;
-  mdMeta: Meta = {};
-  mdContent: string;
+    language = this.languageService.translate.currentLang;
+    mdMeta: Meta = {};
+    mdContent: string;
 
-  constructor(
-    private httpClient: HttpClient,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private markdownService: MarkdownService,
-    private languageService: LanguageService,
-  ) {
-    this.httpClient.get('mds/_meta/categories.json').subscribe(data => {
-      console.log('~>', data);
-    });
-    this.activatedRoute.params.subscribe(params => {
-      const {lang, year, month, filename} = params;
-      try {
-        const process = (data) => {
-          if (!data) {
-            return;
-          }
-          let inMeta = 0;
-          const content = [];
-          data.split(/\r|\n|\r\n/).forEach((line) => {
-            if (line === '---') {
-              inMeta++;
-              return;
+    constructor(
+        private httpClient: HttpClient,
+        private activatedRoute: ActivatedRoute,
+        private router: Router,
+        private markdownService: MarkdownService,
+        private languageService: LanguageService,
+    ) {
+        this.activatedRoute.params.subscribe(params => {
+            const {year, month, filename} = params;
+            const filepath = `mds/${year}/${month}/${filename}.md`;
+            try {
+                const process = (data) => {
+                    if (!data) {
+                        return;
+                    }
+                    let inMeta = 0;
+                    const content = [];
+                    data.split(/\r|\n|\r\n/).forEach((line) => {
+                        if (line === '---') {
+                            inMeta++;
+                            return;
+                        }
+                        if (inMeta < 2) {
+                            const [key, value] = line.split(':');
+                            switch (key) {
+                                case 'category':
+                                case 'tag': {
+                                    this.mdMeta[key] = value.split(',').map(s => s.trim());
+                                    break;
+                                }
+                                default: {
+                                    this.mdMeta[key] = value.trim();
+                                }
+                            }
+                        } else {
+                            content.push(line);
+                        }
+                    });
+                    this.mdContent = this.markdownService.compile(content.join('\r\n'));
+                };
+                this.markdownService.getSource(filepath).subscribe({
+                    next: data => {
+                        if (data.substr(0, 3) === '---') {
+                            process(data);
+                        }
+                    },
+                    error: err => {
+                        console.error(err);
+                    }
+                });
+            } catch (e) {
+                console.error(e);
             }
-            if (inMeta < 2) {
-              const [key, value] = line.split(':');
-              switch (key) {
-                case 'category':
-                case 'tag': {
-                  this.mdMeta[key] = value.split(',').map(s => s.trim());
-                  break;
-                }
-                default: {
-                  this.mdMeta[key] = value.trim();
-                }
-              }
-            } else {
-              content.push(line);
-            }
-          });
-          this.mdContent = this.markdownService.compile(content.join('\r\n'));
-        };
-        this.markdownService.getSource(`mds/${year}/${month}/${filename}.${lang}.md`).subscribe({
-          next: data => {
-            if (data.substr(0, 3) === '---') {
-              process(data);
-            } else {
-              this.markdownService.getSource(`mds/${year}/${month}/${filename}.md`).subscribe({
-                next: data2 => {
-                  if (data2.substr(0, 3) === '---') {
-                    process(data2);
-                  } else {
-                    this.mdMeta = {};
-                    this.mdContent = this.markdownService.compile('# Content Not Found');
-                  }
-                },
-                error: () => {
-                  this.mdMeta = {};
-                  this.mdContent = this.markdownService.compile('# Content Not Found');
-                }
-              });
-            }
-          },
-          error: err => {
-            const {status} = err;
-            if (status !== 200) {
-              this.markdownService.getSource(`mds/${year}/${month}/${filename}.md`).subscribe({
-                next: data2 => {
-                  if (data2.substr(0, 3) === '---') {
-                    process(data2);
-                  } else {
-                    this.mdMeta = {};
-                    this.mdContent = this.markdownService.compile('# Content Not Found');
-                  }
-                },
-                error: () => {
-                  this.mdMeta = {};
-                  this.mdContent = this.markdownService.compile('# Content Not Found');
-                }
-              });
-            }
-          }
         });
-      } catch (e) {
-        console.error(e);
-      }
-    });
-  }
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
 }

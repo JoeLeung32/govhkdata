@@ -4,13 +4,15 @@
     "urlEncode": "uncategorized",
     "link": [
       "2021/05/Goodbye",
-      "2021/05/HelloWorld.md"
+      "2021/05/Goodbye",
+      "2021/05/HelloWorld"
     ]
   },
   {
     "title": "yo man",
     "urlEncode": "yo%20man",
     "link": [
+      "2021/05/Goodbye",
       "2021/05/Goodbye"
     ]
   },
@@ -18,14 +20,14 @@
     "title": "dummy",
     "urlEncode": "dummy",
     "link": [
-      "2021/05/HelloWorld.md"
+      "2021/05/HelloWorld"
     ]
   },
   {
     "title": "dummy4",
     "urlEncode": "dummy4",
     "link": [
-      "2021/05/Oh No.md"
+      "2021/05/Oh No"
     ]
   }
 ]

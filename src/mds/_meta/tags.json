@@ -4,7 +4,8 @@
     "urlEncode": "Demo2",
     "link": [
       "2021/05/Goodbye",
-      "2021/05/Oh No.md"
+      "2021/05/Goodbye",
+      "2021/05/Oh No"
     ]
   },
   {
@@ -12,14 +13,15 @@
     "urlEncode": "Sample%20tag",
     "link": [
       "2021/05/Goodbye",
-      "2021/05/HelloWorld.md"
+      "2021/05/Goodbye",
+      "2021/05/HelloWorld"
     ]
   },
   {
     "title": "Demo",
     "urlEncode": "Demo",
     "link": [
-      "2021/05/HelloWorld.md"
+      "2021/05/HelloWorld"
     ]
   }
 ]

@@ -1,19 +1,76 @@
 <app-page-wrapper [footer]="true">
-  <ol>
-    <li>
-      <a [routerLink]="['/', language, 'changelog', 'read', '2021', '05', 'HelloWorld']">
-        HelloWorld
-      </a>
-    </li>
-    <li>
-      <a [routerLink]="['/', language, 'changelog', 'read', '2021', '05', 'Goodbye']">
-        Goodbye
-      </a>
-    </li>
-    <li>
-      <a [routerLink]="['/', language, 'changelog', 'read', '2021', '99', 'dummy']">
-        Fake data
-      </a>
-    </li>
-  </ol>
+    <div class="wrapper">
+        <div class="main">
+            <ng-container
+                    *ngTemplateOutlet="document; context: { title: 'Contents', response: dataDocumentsJson }"></ng-container>
+        </div>
+        <div class="sidebar">
+            <div>
+                <ng-container
+                        *ngTemplateOutlet="tag; context: { title: 'Categories', response: dataCategoriesJson }"></ng-container>
+            </div>
+            <div>
+                <ng-container
+                        *ngTemplateOutlet="tag; context: { title: 'Tags', response: dataTagsJson }"></ng-container>
+            </div>
+        </div>
+    </div>
 </app-page-wrapper>
+
+<ng-template #document let-response=response let-title=title>
+    <div>
+        <p>
+            <strong>{{title}}</strong>
+        </p>
+        <hr>
+        <ng-container *ngIf="response else loading">
+            <ng-container [ngSwitch]="response.status">
+                <ng-container *ngSwitchCase="'success'">
+                    <ng-container *ngFor="let data of response.data">
+                        <div>
+                            <p>
+                                <a [routerLink]="['./read/' + data.remotePath]">
+                                    {{data.title}} @ {{data.date}}
+                                </a>
+                            </p>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <ng-container *ngTemplateOutlet="error"></ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-template>
+
+<ng-template #tag let-response=response let-title=title>
+    <div>
+        <p>
+            <strong>{{title}}</strong>
+        </p>
+        <hr>
+        <ng-container *ngIf="response else loading">
+            <ng-container [ngSwitch]="response.status">
+                <ng-container *ngSwitchCase="'success'">
+                    <ng-container *ngFor="let data of response.data">
+                        <div>
+                            <span>{{data.title}}</span>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <ng-container *ngTemplateOutlet="error"></ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-template>
+
+<ng-template #loading>
+    <div>Loading...</div>
+</ng-template>
+
+<ng-template #error>
+    <div>Error</div>
+</ng-template>

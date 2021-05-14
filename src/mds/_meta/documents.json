@@ -14,7 +14,6 @@
       "en",
       "tc"
     ],
-    "localPath": "./src/mds/2021/05/Goodbye.en.md",
     "remotePath": "2021/05/Goodbye"
   },
   {
@@ -29,8 +28,7 @@
       "Sample tag"
     ],
     "langCode": null,
-    "localPath": "./src/mds/2021/05/HelloWorld.md",
-    "remotePath": "2021/05/HelloWorld.md"
+    "remotePath": "2021/05/HelloWorld"
   },
   {
     "title": "Oh No",
@@ -42,7 +40,6 @@
       "Demo2"
     ],
     "langCode": null,
-    "localPath": "./src/mds/2021/05/Oh No.md",
-    "remotePath": "2021/05/Oh No.md"
+    "remotePath": "2021/05/Oh No"
   }
 ]
