@@ -4,7 +4,6 @@
     "urlEncode": "Demo2",
     "link": [
       "2021/05/Goodbye",
-      "2021/05/Goodbye",
       "2021/05/Oh No"
     ]
   },
@@ -15,6 +14,13 @@
       "2021/05/Goodbye",
       "2021/05/Goodbye",
       "2021/05/HelloWorld"
+    ]
+  },
+  {
+    "title": "標籤",
+    "urlEncode": "%E6%A8%99%E7%B1%A4",
+    "link": [
+      "2021/05/Goodbye"
     ]
   },
   {
