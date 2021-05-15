@@ -3,6 +3,20 @@ import {BehaviorSubject} from 'rxjs';
 import {LanguageService} from '../../../services/language.service';
 import {HttpService, ObserverType} from '../../../services/http.service';
 
+interface ContentType {
+    langCode: [];
+    title: string;
+    category: [];
+    tag: [];
+    remotePath: string;
+    date: string;
+}
+interface ResponseType {
+    title: string;
+    urL: string;
+    link?: [ContentType];
+}
+
 @Component({
     selector: 'app-changelog-index',
     templateUrl: './changelog-index.component.html',
@@ -11,9 +25,9 @@ import {HttpService, ObserverType} from '../../../services/http.service';
 export class ChangelogIndexComponent implements OnInit {
 
     language = this.languageService.translate.currentLang;
-    public httpDocumentsJson: BehaviorSubject<ObserverType> = new BehaviorSubject(null);
-    public httpCategoriesJson: BehaviorSubject<ObserverType> = new BehaviorSubject(null);
-    public httpTagsJson: BehaviorSubject<ObserverType> = new BehaviorSubject(null);
+    public httpDocumentsJson: BehaviorSubject<[ContentType]> = new BehaviorSubject(null);
+    public httpCategoriesJson: BehaviorSubject<ResponseType> = new BehaviorSubject(null);
+    public httpTagsJson: BehaviorSubject<ResponseType> = new BehaviorSubject(null);
     public dataDocumentsJson;
     public dataCategoriesJson;
     public dataTagsJson;

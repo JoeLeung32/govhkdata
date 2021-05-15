@@ -12,12 +12,12 @@ class FS {
         },
         category: {
             title: '',
-            urlEncode: '',
+            url: '',
             link: [],
         },
         tag: {
             title: '',
-            urlEncode: '',
+            url: '',
             link: [],
         }
     }
@@ -143,7 +143,7 @@ class FS {
                 data.forEach(string => {
                     categories[language].push({
                         title: string,
-                        urlEncode: encodeURIComponent(string),
+                        url: encodeURIComponent(string),
                         link: [],
                     })
                 })
@@ -163,7 +163,7 @@ class FS {
                 data.forEach(string => {
                     tags[language].push({
                         title: string,
-                        urlEncode: encodeURIComponent(string),
+                        url: encodeURIComponent(string),
                         link: [],
                     })
                 })
@@ -180,7 +180,7 @@ class FS {
         categories.final = [...categories['*']]
         Object.keys(categories).filter(k => !['*', 'final'].includes(k)).forEach(key => {
             categories[key].forEach(data => {
-                const index = categories.final.findIndex(f => f.title === data.title);
+                const index = categories.final.findIndex(f => f.title === data.title)
                 if (index >= 0) {
                     if (!categories.final[index].link.includes(data.link)) {
                         categories.final[index].link = [
@@ -197,7 +197,7 @@ class FS {
         tags.final = [...tags['*']]
         Object.keys(tags).filter(k => !['*', 'final'].includes(k)).forEach(key => {
             tags[key].forEach(data => {
-                const index = tags.final.findIndex(f => f.title === data.title);
+                const index = tags.final.findIndex(f => f.title === data.title)
                 if (index >= 0) {
                     if (!tags.final[index].link.includes(data.link)) {
                         tags.final[index].link = [
@@ -211,8 +211,22 @@ class FS {
             })
         })
 
-        this.#md.categories = categories.final.sort((a, b) => a.title > b.title ? 1 : -1)
-        this.#md.tags = tags.final.sort((a, b) => a.title > b.title ? 1 : -1)
+        categories.final.sort((a, b) => a.title > b.title ? 1 : -1).map((data) => {
+            return data.link.map((link, linkIndex) => {
+                data.link[linkIndex] = this.#md.documents.find(doc => doc.remotePath === link)
+            })
+        })
+
+        tags.final.sort((a, b) => a.title > b.title ? 1 : -1).forEach((data) => {
+            return data.link.map((link, linkIndex) => {
+                data.link[linkIndex] = this.#md.documents.find(doc => doc.remotePath === link)
+            })
+        })
+
+        this.#md.categories = categories.final
+        this.#md.tags = tags.final
+
+        this.#md.documents.sort((a, b) => new Date(a.date) > new Date(b.date) ? -1 : 1);
         return this.#md
     }
 

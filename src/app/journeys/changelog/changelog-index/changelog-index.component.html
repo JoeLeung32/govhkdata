@@ -7,7 +7,7 @@
         <div class="sidebar">
             <div>
                 <ng-container
-                        *ngTemplateOutlet="tag; context: { title: 'Categories', response: dataCategoriesJson }"></ng-container>
+                        *ngTemplateOutlet="category; context: { title: 'Categories', response: dataCategoriesJson }"></ng-container>
             </div>
             <div>
                 <ng-container
@@ -44,6 +44,34 @@
     </div>
 </ng-template>
 
+<ng-template #category let-response=response let-title=title>
+    <div>
+        <p>
+            <strong>{{title}}</strong>
+        </p>
+        <hr>
+        <ng-container *ngIf="response else loading">
+            <ng-container [ngSwitch]="response.status">
+                <ng-container *ngSwitchCase="'success'">
+                    <ng-container *ngFor="let data of response.data">
+                        <div>
+                            <p>
+                                <a [routerLink]="['./category/' + data.title]">
+                                    {{data.title}}
+                                </a>
+                                <small>({{data.link.length}})</small>
+                            </p>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <ng-container *ngTemplateOutlet="error"></ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-template>
+
 <ng-template #tag let-response=response let-title=title>
     <div>
         <p>
@@ -55,7 +83,12 @@
                 <ng-container *ngSwitchCase="'success'">
                     <ng-container *ngFor="let data of response.data">
                         <div>
-                            <span>{{data.title}}</span>
+                            <p>
+                                <a [routerLink]="['./tag/' + data.title]">
+                                    {{data.title}}
+                                </a>
+                                <small>({{data.link.length}})</small>
+                            </p>
                         </div>
                     </ng-container>
                 </ng-container>

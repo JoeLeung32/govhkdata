@@ -1,25 +1,126 @@
 [
   {
     "title": "Demo",
-    "urlEncode": "Demo",
+    "url": "Demo",
     "link": [
-      "2021/05/HelloWorld"
+      {
+        "langCode": null,
+        "title": {
+          "*": "Hello World"
+        },
+        "category": {
+          "*": [
+            "uncategorized",
+            "dummy",
+            "中文"
+          ]
+        },
+        "tag": {
+          "*": [
+            "Demo",
+            "Sample tag"
+          ]
+        },
+        "remotePath": "2021/05/HelloWorld",
+        "date": "2021-05-15"
+      }
     ]
   },
   {
     "title": "Demo2",
-    "urlEncode": "Demo2",
+    "url": "Demo2",
     "link": [
-      "2021/05/Oh No",
-      "2021/05/Goodbye"
+      {
+        "langCode": null,
+        "title": {
+          "*": "Oh No"
+        },
+        "category": {
+          "*": [
+            "dummy4"
+          ]
+        },
+        "tag": {
+          "*": [
+            "Demo2"
+          ]
+        },
+        "remotePath": "2021/05/Oh No",
+        "date": "2021-05-13"
+      },
+      {
+        "langCode": [
+          "en"
+        ],
+        "title": {
+          "en": "Goodbye",
+          "*": "Goodbye"
+        },
+        "category": {
+          "en": [
+            "uncategorized",
+            "yo man"
+          ]
+        },
+        "tag": {
+          "en": [
+            "Demo2",
+            "Sample tag"
+          ]
+        },
+        "remotePath": "2021/05/Goodbye",
+        "date": "2021-05-13"
+      }
     ]
   },
   {
     "title": "Sample tag",
-    "urlEncode": "Sample%20tag",
+    "url": "Sample%20tag",
     "link": [
-      "2021/05/HelloWorld",
-      "2021/05/Goodbye"
+      {
+        "langCode": null,
+        "title": {
+          "*": "Hello World"
+        },
+        "category": {
+          "*": [
+            "uncategorized",
+            "dummy",
+            "中文"
+          ]
+        },
+        "tag": {
+          "*": [
+            "Demo",
+            "Sample tag"
+          ]
+        },
+        "remotePath": "2021/05/HelloWorld",
+        "date": "2021-05-15"
+      },
+      {
+        "langCode": [
+          "en"
+        ],
+        "title": {
+          "en": "Goodbye",
+          "*": "Goodbye"
+        },
+        "category": {
+          "en": [
+            "uncategorized",
+            "yo man"
+          ]
+        },
+        "tag": {
+          "en": [
+            "Demo2",
+            "Sample tag"
+          ]
+        },
+        "remotePath": "2021/05/Goodbye",
+        "date": "2021-05-13"
+      }
     ]
   }
 ]

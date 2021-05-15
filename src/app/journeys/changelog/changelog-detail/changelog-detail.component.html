@@ -1,23 +1,33 @@
 <app-page-wrapper [footer]="true">
-  <div class="changelog--detail">
-    <ng-container *ngIf="mdMeta">
-      <h1 [innerHTML]="mdMeta?.title"></h1>
+  <div class="wrapper">
+    <div class="main">
       <div>
-        <span [innerHTML]="mdMeta?.date"></span>
-      </div>
-      <div>
-        <ng-container *ngFor="let category of mdMeta?.category">
-          <span>{{category}}</span>
+        <ng-container *ngIf="mdMeta">
+          <h1 [innerHTML]="mdMeta?.title"></h1>
+          <div>
+            <span [innerHTML]="mdMeta?.date"></span>
+          </div>
+          <div>
+            <ng-container *ngFor="let category of mdMeta?.category">
+              <span>{{category}}</span>
+            </ng-container>
+          </div>
+          <div>
+            <ng-container *ngFor="let tag of mdMeta?.tag">
+              <span>{{tag}}</span>
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="mdContent">
+          <div [innerHTML]="mdContent"></div>
         </ng-container>
       </div>
+    </div>
+    <div class="sidebar">
       <div>
-        <ng-container *ngFor="let tag of mdMeta?.tag">
-          <span>{{tag}}</span>
-        </ng-container>
       </div>
-    </ng-container>
-    <ng-container *ngIf="mdContent">
-      <div [innerHTML]="mdContent"></div>
-    </ng-container>
+      <div>
+      </div>
+    </div>
   </div>
 </app-page-wrapper>

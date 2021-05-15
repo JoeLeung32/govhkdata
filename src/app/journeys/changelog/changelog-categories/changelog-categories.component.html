@@ -1,0 +1,28 @@
+<app-page-wrapper [footer]="true">
+    <div class="wrapper">
+        <div class="main">
+            <div>
+                <ng-container *ngIf="getValue">
+                    <h1>{{getValue.title}}</h1>
+                </ng-container>
+            </div>
+            <div>
+                <ng-container *ngIf="getValue">
+                    <ng-container *ngFor="let data of getValue.link">
+                        <p>
+                            <a [routerLink]="['../../read/' + data.remotePath]">
+                                {{data.title[language] || data.title['*']}} @ {{data.date}}
+                            </a>
+                        </p>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+</app-page-wrapper>

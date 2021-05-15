@@ -11,6 +11,7 @@ import {SharedModule} from '../../shared/shared.module';
 import {ChangelogRoutingModule} from './changelog-routing.module';
 import {ChangelogIndexComponent} from './changelog-index/changelog-index.component';
 import { ChangelogDetailComponent } from './changelog-detail/changelog-detail.component';
+import { ChangelogCategoriesComponent } from './changelog-categories/changelog-categories.component';
 
 export function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoader {
   return new MultiTranslateHttpLoader(http, [
@@ -22,7 +23,8 @@ export function createTranslateLoader(http: HttpClient): MultiTranslateHttpLoade
 @NgModule({
   declarations: [
     ChangelogIndexComponent,
-    ChangelogDetailComponent
+    ChangelogDetailComponent,
+    ChangelogCategoriesComponent
   ],
   imports: [
     CommonModule,

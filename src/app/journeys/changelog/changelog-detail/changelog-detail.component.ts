@@ -68,6 +68,9 @@ export class ChangelogDetailComponent implements OnInit {
     }
 
     logic(filepath): void {
+        if (!filepath) {
+            return;
+        }
         try {
             const process = (data) => {
                 if (!data) {

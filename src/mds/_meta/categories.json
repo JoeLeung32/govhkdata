@@ -1,31 +1,159 @@
 [
   {
     "title": "dummy",
-    "urlEncode": "dummy",
+    "url": "dummy",
     "link": [
-      "2021/05/HelloWorld"
+      {
+        "langCode": null,
+        "title": {
+          "*": "Hello World"
+        },
+        "category": {
+          "*": [
+            "uncategorized",
+            "dummy",
+            "中文"
+          ]
+        },
+        "tag": {
+          "*": [
+            "Demo",
+            "Sample tag"
+          ]
+        },
+        "remotePath": "2021/05/HelloWorld",
+        "date": "2021-05-15"
+      }
     ]
   },
   {
     "title": "dummy4",
-    "urlEncode": "dummy4",
+    "url": "dummy4",
     "link": [
-      "2021/05/Oh No"
+      {
+        "langCode": null,
+        "title": {
+          "*": "Oh No"
+        },
+        "category": {
+          "*": [
+            "dummy4"
+          ]
+        },
+        "tag": {
+          "*": [
+            "Demo2"
+          ]
+        },
+        "remotePath": "2021/05/Oh No",
+        "date": "2021-05-13"
+      }
     ]
   },
   {
     "title": "uncategorized",
-    "urlEncode": "uncategorized",
+    "url": "uncategorized",
     "link": [
-      "2021/05/HelloWorld",
-      "2021/05/Goodbye"
+      {
+        "langCode": null,
+        "title": {
+          "*": "Hello World"
+        },
+        "category": {
+          "*": [
+            "uncategorized",
+            "dummy",
+            "中文"
+          ]
+        },
+        "tag": {
+          "*": [
+            "Demo",
+            "Sample tag"
+          ]
+        },
+        "remotePath": "2021/05/HelloWorld",
+        "date": "2021-05-15"
+      },
+      {
+        "langCode": [
+          "en"
+        ],
+        "title": {
+          "en": "Goodbye",
+          "*": "Goodbye"
+        },
+        "category": {
+          "en": [
+            "uncategorized",
+            "yo man"
+          ]
+        },
+        "tag": {
+          "en": [
+            "Demo2",
+            "Sample tag"
+          ]
+        },
+        "remotePath": "2021/05/Goodbye",
+        "date": "2021-05-13"
+      }
     ]
   },
   {
     "title": "yo man",
-    "urlEncode": "yo%20man",
+    "url": "yo%20man",
     "link": [
-      "2021/05/Goodbye"
+      {
+        "langCode": [
+          "en"
+        ],
+        "title": {
+          "en": "Goodbye",
+          "*": "Goodbye"
+        },
+        "category": {
+          "en": [
+            "uncategorized",
+            "yo man"
+          ]
+        },
+        "tag": {
+          "en": [
+            "Demo2",
+            "Sample tag"
+          ]
+        },
+        "remotePath": "2021/05/Goodbye",
+        "date": "2021-05-13"
+      }
+    ]
+  },
+  {
+    "title": "中文",
+    "url": "%E4%B8%AD%E6%96%87",
+    "link": [
+      {
+        "langCode": null,
+        "title": {
+          "*": "Hello World"
+        },
+        "category": {
+          "*": [
+            "uncategorized",
+            "dummy",
+            "中文"
+          ]
+        },
+        "tag": {
+          "*": [
+            "Demo",
+            "Sample tag"
+          ]
+        },
+        "remotePath": "2021/05/HelloWorld",
+        "date": "2021-05-15"
+      }
     ]
   }
 ]
