@@ -1,45 +1,63 @@
 [
   {
-    "title": "拜拜",
-    "date": "2021-05-13",
-    "category": [
-      "分類一",
-      "分類二"
-    ],
-    "tag": [
-      "標籤",
-      "Sample tag"
-    ],
     "langCode": [
-      "en",
-      "tc"
+      "en"
     ],
-    "remotePath": "2021/05/Goodbye"
+    "title": {
+      "en": "Goodbye",
+      "*": "Goodbye"
+    },
+    "category": {
+      "en": [
+        "uncategorized",
+        "yo man"
+      ]
+    },
+    "tag": {
+      "en": [
+        "Demo2",
+        "Sample tag"
+      ]
+    },
+    "remotePath": "2021/05/Goodbye",
+    "date": "2021-05-13"
   },
   {
-    "title": "Hello World",
-    "date": "2021-05-13",
-    "category": [
-      "uncategorized",
-      "dummy"
-    ],
-    "tag": [
-      "Demo",
-      "Sample tag"
-    ],
     "langCode": null,
-    "remotePath": "2021/05/HelloWorld"
+    "title": {
+      "*": "Hello World"
+    },
+    "category": {
+      "*": [
+        "uncategorized",
+        "dummy"
+      ]
+    },
+    "tag": {
+      "*": [
+        "Demo",
+        "Sample tag"
+      ]
+    },
+    "remotePath": "2021/05/HelloWorld",
+    "date": "2021-05-13"
   },
   {
-    "title": "Oh No",
-    "date": "2021-05-13",
-    "category": [
-      "dummy4"
-    ],
-    "tag": [
-      "Demo2"
-    ],
     "langCode": null,
-    "remotePath": "2021/05/Oh No"
+    "title": {
+      "*": "Oh No"
+    },
+    "category": {
+      "*": [
+        "dummy4"
+      ]
+    },
+    "tag": {
+      "*": [
+        "Demo2"
+      ]
+    },
+    "remotePath": "2021/05/Oh No",
+    "date": "2021-05-13"
   }
 ]

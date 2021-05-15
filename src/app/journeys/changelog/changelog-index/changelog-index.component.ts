@@ -20,32 +20,16 @@ export class ChangelogIndexComponent implements OnInit {
     private urlDocumentsJson = 'mds/_meta/documents.json';
     private urlCategoriesJson = 'mds/_meta/categories.json';
     private urlTagsJson = 'mds/_meta/tags.json';
-    private responseBasic = {
-        status: null,
-        data: null,
-        complete: false,
-    };
 
     constructor(
         private languageService: LanguageService,
         private httpService: HttpService,
     ) {
-        this.httpDocumentsJson.subscribe(value => {
-            if (value) {
-                const data = Object.assign(this.responseBasic, value);
-                data.data = data.data.map((d) => {
-                    const {langCode, remotePath} = d;
-                    if (langCode && langCode.length) {
-                        if (langCode.includes(this.language)) {
-                            d.remotePath = `${remotePath}.${this.language}`;
-                        } else {
-                            d.remotePath = `${remotePath}.${langCode[0]}`;
-                        }
-                    }
-                    return d;
-                });
-            }
-            this.dataDocumentsJson = value;
+        languageService.translate.onLangChange.subscribe(({lang}) => {
+            this.language = lang;
+        });
+        this.httpDocumentsJson.subscribe(data => {
+            this.dataDocumentsJson = data;
         });
         this.httpCategoriesJson.subscribe(data => {
             this.dataCategoriesJson = data;

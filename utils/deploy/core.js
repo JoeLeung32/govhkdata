@@ -95,9 +95,9 @@ class FTP {
                 if (err) throw err
                 this.#list = remoteList
                 await this.taskRemoveAll()
-                await this.delay(1000);
+                await this.delay(1000)
                 await this.taskUpload(fileList)
-                await this.delay(1000);
+                await this.delay(1000)
                 this.#ftp.end()
                 console.log('FTP END')
             })
@@ -107,9 +107,9 @@ class FTP {
     delay(s) {
         return new Promise(function (resolve) {
             setTimeout(function () {
-                resolve();
-            }, s);
-        });
+                resolve()
+            }, s)
+        })
     }
 }
 

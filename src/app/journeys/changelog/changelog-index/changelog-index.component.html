@@ -30,7 +30,7 @@
                         <div>
                             <p>
                                 <a [routerLink]="['./read/' + data.remotePath]">
-                                    {{data.title}} @ {{data.date}}
+                                    {{data.title[language] || data.title['*']}} @ {{data.date}}
                                 </a>
                             </p>
                         </div>

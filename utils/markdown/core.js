@@ -3,12 +3,12 @@ const fs = require('fs')
 class FS {
     #structure = {
         mdDocument: {
+            langCode: [],
             title: '',
-            date: '',
             category: [],
             tag: [],
-            langCode: [],
             remotePath: '',
+            date: '',
         },
         category: {
             title: '',
@@ -28,15 +28,15 @@ class FS {
         tags: [],
     }
 
-    #path;
+    #path
 
     constructor(path) {
-        this.#path = path;
+        this.#path = path
     }
 
     scan(dirname, remoteParentPath) {
         if (!dirname) {
-            dirname = this.#path;
+            dirname = this.#path
         }
         if (!fs.existsSync(dirname)) {
             throw `${dirname} not exist`
@@ -52,7 +52,7 @@ class FS {
             const meta = {...this.#structure.mdDocument}
             meta.remotePath = fileRemotePath.replace(/(.en|.tc|.sc).md|.md/i, '')
             if (fileRemotePath.match(/(.en|.tc|.sc).md/i)) {
-                meta.langCode = [fileRemotePath.match(/(.en|.tc|.sc).md/i)[1].substr(1,2)]
+                meta.langCode = [fileRemotePath.match(/(.en|.tc|.sc).md/i)[1].substr(1, 2)]
             } else {
                 meta.langCode = null
             }
@@ -62,7 +62,7 @@ class FS {
                     break
                 }
                 case fs.lstatSync(fileLocalPath).isFile(): {
-                    const existIndex = this.#md.documents.findIndex(md => md.remotePath === meta.remotePath);
+                    const existIndex = this.#md.documents.findIndex(md => md.remotePath === meta.remotePath)
                     if (existIndex < 0) {
                         this.#md.documents.push(meta)
                     } else {
@@ -79,20 +79,11 @@ class FS {
     }
 
     setupMetaData(list) {
-        list.documents.forEach((doc, idx) => {
-            const array = [];
-            let {langCode, remotePath} = doc
-            if (langCode && langCode.length) {
-                langCode.forEach(lang => {
-                    array.push(`${this.#path}/${remotePath}.${lang}.md`)
-                })
-            } else {
-                array.push(`${this.#path}/${remotePath}.md`)
-            }
-            array.forEach(path => {
-                const content = fs.readFileSync(path, 'utf8').split(/\r|\n|\r\n/)
-                let metaStart = false
-                content.forEach((line) => {
+        const readFile = ({language, path}, doc, idx) => {
+            let metaStart = false
+            fs.readFileSync(path, 'utf8')
+                .split(/\r|\n|\r\n/)
+                .forEach((line) => {
                     if (line === '---') {
                         if (metaStart) {
                             metaStart = false
@@ -102,53 +93,130 @@ class FS {
                         return
                     }
                     if (metaStart) {
+                        const setData = (sourceArray, value) => {
+                            if (typeof sourceArray === 'string' || Array.isArray(sourceArray)) {
+                                sourceArray = {}
+                            }
+                            sourceArray[language] = value
+                            return sourceArray
+                        }
                         const [key, value] = line.split(':')
-                        if (['title', 'date'].includes(key)) {
+                        if (['title'].includes(key)) {
+                            this.#md.documents[idx][key] = setData(this.#md.documents[idx][key], value.trim())
+                            this.#md.documents[idx][key]['*'] = value.trim()
+                            return
+                        }
+                        if (['date'].includes(key)) {
                             this.#md.documents[idx][key] = value.trim()
                             return
                         }
                         if (['category', 'tag'].includes(key)) {
-                            this.#md.documents[idx][key] = value.split(',').map(s => s.trim())
-                            if (key === 'category') {
-                                doc.category.forEach((c) => {
-                                    const category = {...this.#structure.category}
-                                    category.title = c
-                                    category.urlEncode = encodeURIComponent(c)
-                                    category.link = [doc.remotePath]
-                                    if (!this.#md.categories.find(a => a.title === c)) {
-                                        this.#md.categories.push(category)
-                                    } else {
-                                        const catIndex = this.#md.categories.findIndex(a => a.title === c)
-                                        this.#md.categories[catIndex].link.push(doc.remotePath)
-                                    }
-                                })
-                            }
-                            if (key === 'tag') {
-                                doc.tag.forEach((t) => {
-                                    const tag = {...this.#structure.tag}
-                                    tag.title = t
-                                    tag.urlEncode = encodeURIComponent(t)
-                                    tag.link = [doc.remotePath]
-                                    if (!this.#md.tags.find(a => a.title === t)) {
-                                        this.#md.tags.push(tag)
-                                    } else {
-                                        const tagIndex = this.#md.tags.findIndex(a => a.title === t)
-                                        this.#md.tags[tagIndex].link.push(doc.remotePath)
-                                    }
-                                })
-                            }
+                            this.#md.documents[idx][key] = setData(this.#md.documents[idx][key], value.split(',').map(s => s.trim()))
                         }
                     }
                 })
+        }
+        let categories = {}
+        let tags = {}
+        list.documents.forEach((doc, idx) => {
+            const array = []
+            let {langCode, remotePath} = doc
+            if (langCode && langCode.length) {
+                langCode.forEach(lang => {
+                    array.push({
+                        language: lang,
+                        path: `${this.#path}/${remotePath}.${lang}.md`
+                    })
+                })
+            } else {
+                array.push({
+                    language: '*',
+                    path: `${this.#path}/${remotePath}.md`
+                })
+            }
+            array.forEach(a => readFile(a, doc, idx))
+
+            for (const [language, data] of Object.entries(doc.category)) {
+                if (!categories[language]) {
+                    categories[language] = []
+                }
+                data.forEach(string => {
+                    categories[language].push({
+                        title: string,
+                        urlEncode: encodeURIComponent(string),
+                        link: [],
+                    })
+                })
+                categories[language] = categories[language]
+                    .filter((refData, index, self) => index === self.findIndex((d) => d.title === refData.title))
+                categories[language].forEach((d) => {
+                    if (doc.category[language].includes(d.title)) {
+                        d.link.push(doc.remotePath)
+                    }
+                })
+            }
+
+            for (const [language, data] of Object.entries(doc.tag)) {
+                if (!tags[language]) {
+                    tags[language] = []
+                }
+                data.forEach(string => {
+                    tags[language].push({
+                        title: string,
+                        urlEncode: encodeURIComponent(string),
+                        link: [],
+                    })
+                })
+                tags[language] = tags[language]
+                    .filter((refData, index, self) => index === self.findIndex((d) => d.title === refData.title))
+                tags[language].forEach((d) => {
+                    if (doc.tag[language].includes(d.title)) {
+                        d.link.push(doc.remotePath)
+                    }
+                })
+            }
+        })
+
+        categories.final = [...categories['*']]
+        Object.keys(categories).filter(k => !['*', 'final'].includes(k)).forEach(key => {
+            categories[key].forEach(data => {
+                const index = categories.final.findIndex(f => f.title === data.title);
+                if (index >= 0) {
+                    if (!categories.final[index].link.includes(data.link)) {
+                        categories.final[index].link = [
+                            ...categories.final[index].link,
+                            ...data.link
+                        ]
+                    }
+                } else {
+                    categories.final.push(data)
+                }
             })
         })
+
+        tags.final = [...tags['*']]
+        Object.keys(tags).filter(k => !['*', 'final'].includes(k)).forEach(key => {
+            tags[key].forEach(data => {
+                const index = tags.final.findIndex(f => f.title === data.title);
+                if (index >= 0) {
+                    if (!tags.final[index].link.includes(data.link)) {
+                        tags.final[index].link = [
+                            ...tags.final[index].link,
+                            ...data.link
+                        ]
+                    }
+                } else {
+                    tags.final.push(data)
+                }
+            })
+        })
+
+        this.#md.categories = categories.final.sort((a, b) => a.title > b.title ? 1 : -1)
+        this.#md.tags = tags.final.sort((a, b) => a.title > b.title ? 1 : -1)
         return this.#md
     }
 
     saveToJson(path, data) {
-        if (!data || !data.length) {
-            return
-        }
         fs.writeFileSync(path, JSON.stringify(data, null, 2))
     }
 
