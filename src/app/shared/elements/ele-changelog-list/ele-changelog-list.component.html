@@ -1,0 +1,43 @@
+<ng-container *ngIf="response else loading">
+    <ng-container [ngSwitch]="response.status">
+        <ng-container *ngSwitchCase="'success'">
+            <ng-container *ngFor="let data of response.data">
+                <div>
+                    <ng-container [ngSwitch]="displayMode">
+                        <ng-container *ngSwitchCase="'list'">
+                            <a [routerLink]="['./read/' + data.remotePath]">
+                                {{data.title[language] || data.title['*']}}
+                            </a>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'categories'">
+                            <a [routerLink]="['./category/' + data.title]">
+                                {{data.title}}
+                            </a>
+                            <small>({{data.link.length}})</small>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'tags'">
+                            <a [routerLink]="['./tag/' + data.title]">
+                                {{data.title}}
+                            </a>
+                            <small>({{data.link.length}})</small>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <span>{{data.title}}</span>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            <ng-container *ngTemplateOutlet="error"></ng-container>
+        </ng-container>
+    </ng-container>
+</ng-container>
+
+<ng-template #loading>
+    <ng-content select=".loading"></ng-content>
+</ng-template>
+
+<ng-template #error>
+    <ng-content select=".error"></ng-content>
+</ng-template>

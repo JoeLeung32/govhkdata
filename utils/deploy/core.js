@@ -67,7 +67,7 @@ class FTP {
         })
     }
 
-    taskUpload(list) {
+    async taskUpload(list) {
         return new Promise((resolve, reject) => {
             if (!list || !list.length) reject('list is empty')
             list.filter(d => d.type === 'd').forEach(async (d) => {
@@ -95,10 +95,20 @@ class FTP {
                 if (err) throw err
                 this.#list = remoteList
                 await this.taskRemoveAll()
+                await this.delay(1000)
                 await this.taskUpload(fileList)
+                await this.delay(1000)
                 this.#ftp.end()
                 console.log('FTP END')
             })
+        })
+    }
+
+    delay(s) {
+        return new Promise(function (resolve) {
+            setTimeout(function () {
+                resolve()
+            }, s)
         })
     }
 }
@@ -107,9 +117,8 @@ class FS {
     #list = []
 
     setDateMarker(dirname) {
-        const date = new Date().toISOString();
-        const filename = `${dirname}/${date}.upload`;
-        fs.writeFileSync(filename, '');
+        const filename = `${dirname}/${new Date().toISOString()}.upload`
+        fs.writeFileSync(filename, new Date().toLocaleString())
     }
 
     scan(dirname, remoteParentPath) {

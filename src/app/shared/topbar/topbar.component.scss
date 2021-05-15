@@ -1,22 +1,13 @@
 @import "src/assets/themes/default";
 
 .topbar {
-  @include flex-wrap-align-items-center;
-  background-color: var(--primary-bg-color);
-  color: var(--primary-bg-font-color);
-  font-size: $font-size-standard;
   position: relative;
   z-index: 1;
   min-height: $topBarHeight;
 
-  > .wrapper {
-    @include flex-wrap-align-items-center;
-    justify-content: space-between;
-    flex-grow: 1;
-    margin: 0 $leftRightSpacing;
+  > .container {
 
     > div {
-      @include flex-wrap-align-items-center;
 
       > div {
         cursor: pointer;

@@ -1,11 +1,11 @@
-<div class="topbar">
-  <div class="wrapper">
+<div class="topbar d-flex flex-wrap align-content-center">
+  <div class="container d-flex flex-wrap justify-content-between align-content-center">
     <div>
       <a (click)="router.navigate([currentLanguage])">
         {{'webTitle'|translate}}
       </a>
     </div>
-    <div>
+    <div class="d-flex flex-wrap">
       <ng-container *ngIf="themeModeIcon">
         <div (click)="changeMode()" class="btnThemSwitch">
           <fa-icon [icon]="themeModeIcon"></fa-icon>

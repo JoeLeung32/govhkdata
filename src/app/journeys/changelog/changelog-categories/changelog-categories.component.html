@@ -1,0 +1,27 @@
+<app-page-wrapper [footer]="true">
+    <app-lay-flex-two-one>
+        <ng-container id="left">
+            <div>
+                <ng-container *ngIf="getValue">
+                    <div class="border-bottom py-2 my-2">
+                        {{displayMode === 'tag' ? ('tags'|translate) : ('categories'|translate)}}: {{getValue.title}}
+                    </div>
+                </ng-container>
+            </div>
+            <div>
+                <ng-container *ngIf="getValue">
+                    <ng-container *ngFor="let data of getValue.link">
+                        <p>
+                            <a [routerLink]="['../../read/' + data.remotePath]">
+                                {{data.title[language] || data.title['*']}} @ {{data.date}}
+                            </a>
+                        </p>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </ng-container>
+        <ng-container id="side">
+
+        </ng-container>
+    </app-lay-flex-two-one>
+</app-page-wrapper>

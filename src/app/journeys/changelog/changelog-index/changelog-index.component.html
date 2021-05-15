@@ -1,0 +1,47 @@
+<app-page-wrapper [footer]="true">
+    <app-lay-flex-two-one>
+        <ng-container id="left">
+            <ng-container *ngTemplateOutlet="list; context: { response: dataDocumentsJson }"></ng-container>
+        </ng-container>
+        <ng-container id="right">
+            <ng-container *ngTemplateOutlet="category; context: { response: dataCategoriesJson }"></ng-container>
+            <ng-container *ngTemplateOutlet="tag; context: { response: dataTagsJson }"></ng-container>
+        </ng-container>
+    </app-lay-flex-two-one>
+</app-page-wrapper>
+
+<ng-template #list let-response=response>
+    <div>
+        <div class="border-bottom py-2 my-2">
+            <strong>{{'recent-article'|translate}}</strong>
+        </div>
+        <app-ele-changelog-list [response]="response" [displayMode]="'list'">
+            <div class="loading">Loading...</div>
+            <div class="error">Error</div>
+        </app-ele-changelog-list>
+    </div>
+</ng-template>
+
+<ng-template #category let-response=response>
+    <div>
+        <div class="border-bottom py-2 my-2">
+            <strong>{{'categories'|translate}}</strong>
+        </div>
+        <app-ele-changelog-list [response]="response" [displayMode]="'categories'">
+            <div class="loading">Loading...</div>
+            <div class="error">Error</div>
+        </app-ele-changelog-list>
+    </div>
+</ng-template>
+
+<ng-template #tag let-response=response let-title=title>
+    <div>
+        <div class="border-bottom py-2 my-2">
+            <strong>{{'tags'|translate}}</strong>
+        </div>
+        <app-ele-changelog-list [response]="response" [displayMode]="'tags'">
+            <div class="loading">Loading...</div>
+            <div class="error">Error</div>
+        </app-ele-changelog-list>
+    </div>
+</ng-template>

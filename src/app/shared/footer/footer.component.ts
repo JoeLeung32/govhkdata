@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {faCopyright} from '@fortawesome/free-regular-svg-icons';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
+import {LanguageService} from '../../services/language.service';
 
 @Component({
   selector: 'app-footer',
@@ -9,10 +10,13 @@ import {faGithub} from '@fortawesome/free-brands-svg-icons';
 })
 export class FooterComponent implements OnInit {
 
+  language = this.languageService.translate.currentLang;
   copyrightIcon = faCopyright;
   githubIcon = faGithub;
 
-  constructor() {
+  constructor(
+    private languageService: LanguageService,
+  ) {
   }
 
   ngOnInit(): void {
