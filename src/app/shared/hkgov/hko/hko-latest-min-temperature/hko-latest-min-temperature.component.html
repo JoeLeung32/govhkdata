@@ -1,0 +1,35 @@
+<section>
+    <swiper
+            #temperatureSwiper
+            (swiper)="onSwiper($event)"
+            (slideChange)="onSlideChange()"
+            [config]="swiperConfig"
+            [pagination]="swiperPagination"
+            [navigation]="true"
+    >
+        <ng-template swiperSlide>123</ng-template>
+        <ng-template swiperSlide>123</ng-template>
+        <!--<ng-container *ngFor="let slide of swiperData.getValue()">
+            <ng-template swiperSlide>
+                456
+                &lt;!&ndash;<div class="wrapper">
+                    <div class="card2">
+                        <div class="temperature">
+                            <span class="temperature&#45;&#45;value">{{slide.data.temperature}}</span>
+                            <span class="temperature&#45;&#45;format">°C</span>
+                        </div>
+                        <div class="station">{{slide.station[language]}}</div>
+                        <div>
+                            <small>{{slide.data.dateTime}}</small>
+                        </div>
+                    </div>
+                </div>&ndash;&gt;
+            </ng-template>
+        </ng-container>-->
+    </swiper>
+    <div>
+        <ng-container *ngFor="let location of weatherStationList">
+            <button (click)="onSlideTo(location['en'])">{{location[language]}}</button>
+        </ng-container>
+    </div>
+</section>

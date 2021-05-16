@@ -19,6 +19,33 @@ export class HttpService {
 
     }
 
+    getCsv(url: string, observer?: ObserverType): Observable<any> {
+        const call = this.httpClient.get(url, {
+            responseType: 'text',
+        });
+        if (observer) {
+            call.subscribe({
+                next: value => {
+                    if (observer.next && typeof observer.next === 'function') {
+                        observer.next(value);
+                    }
+                },
+                error: err => {
+                    if (observer.error && typeof observer.error === 'function') {
+                        observer.error(err);
+                    }
+                },
+                complete: () => {
+                    if (observer.complete && typeof observer.complete === 'function') {
+                        observer.complete();
+                    }
+                }
+            });
+        } else {
+            return call;
+        }
+    }
+
     getJson(url: string, observer?: ObserverType): Observable<any> {
         const call = this.httpClient.get(url);
         if (observer) {
