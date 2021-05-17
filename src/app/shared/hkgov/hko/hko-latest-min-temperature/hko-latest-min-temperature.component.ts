@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import SwiperCore, {Pagination, SwiperOptions} from 'swiper/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {LanguageService} from '../../../../services/language.service';
 import {HkoLatestService, WeatherStation} from '../../../../services/hkgov/hko/hko-latest.service';
@@ -9,27 +8,14 @@ import {HkoLatestService, WeatherStation} from '../../../../services/hkgov/hko/h
     templateUrl: './hko-latest-min-temperature.component.html',
     styleUrls: ['./hko-latest-min-temperature.component.scss']
 })
-export class HkoLatestMinTemperatureComponent implements OnInit, AfterViewInit {
+export class HkoLatestMinTemperatureComponent implements OnInit {
 
-    @ViewChild('temperatureSwiper') temperatureSwiper: any;
+    @ViewChild('carousel', {static: false}) carousel: any;
     language = this.languageService.translate.currentLang;
     public weatherStationList = [...WeatherStation.hk, ...WeatherStation.kl, ...WeatherStation.nt];
     public weatherStationDistrictList = WeatherStation;
     public swiperData: BehaviorSubject<any[]> = new BehaviorSubject([]);
-    public swiperConfig: SwiperOptions = {
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-        },
-    };
-    public swiperPagination = {
-        dynamicBullets: true
-    };
-    private swiper;
+    private swipeTimeout;
 
     constructor(
         private languageService: LanguageService,
@@ -45,24 +31,25 @@ export class HkoLatestMinTemperatureComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        SwiperCore.use([Pagination]);
     }
 
-    ngAfterViewInit(): void {
-        console.log(this.temperatureSwiper.swiperRef.size);
-    }
-
-    onSwiper(swiper): void {
-        this.swiper = swiper;
-    }
-
-    onSlideChange(): void {
-        console.log('onSlideChange');
+    onSwipe(event): void {
+        const x = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'right' : 'left') : null;
+        // const y = Math.abs(event.deltaY) > 40 ? (event.deltaY > 0 ? 'down' : 'up') : null;
+        this.carousel.pause();
+        if (x === 'right') {
+            this.carousel.prev();
+        } else {
+            this.carousel.next();
+        }
+        this.swipeTimeout = setTimeout(() => {
+            this.carousel.cycle();
+        }, 1000);
     }
 
     onSlideTo(location: string): void {
         const index = this.swiperData.getValue().findIndex(data => data.station.en === location);
-        this.swiper.slideTo(index);
+        this.carousel.select(`station${index}`);
     }
 
 }
