@@ -27,7 +27,7 @@ export class HkoLatestMinTemperatureComponent implements OnInit {
         hkoLatestService.response.latestMinTemperature.subscribe(data => {
             this.swiperData.next(data);
         });
-        hkoLatestService.requestRecentTemperature(this.language);
+        hkoLatestService.requestRecentTemperature();
     }
 
     ngOnInit(): void {

@@ -216,11 +216,12 @@ export const WeatherStation = {
 })
 export class HkoLatestService {
 
+    public moment = moment;
     public response: ResponseType = {
         latestMinTemperature: new BehaviorSubject<any[]>([]),
     };
     private resources = {
-        latestMinTemperature: 'https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature.csv',
+        latestMinTemperature: 'https://www.chunkit.hk/to/govhk/csv.php?csv=https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature.csv',
     };
 
     constructor(
@@ -228,13 +229,7 @@ export class HkoLatestService {
     ) {
     }
 
-    requestRecentTemperature(language): void {
-        let langCode = 'en-au';
-        if (language === 'tc') {
-            langCode = 'zh-tw';
-        } else if (language === 'sc') {
-            langCode = 'zh-cn';
-        }
+    requestRecentTemperature(): void {
         this.httpService.getCsv(this.resources.latestMinTemperature).subscribe({
             next: value => {
                 if (!value) {
@@ -246,9 +241,14 @@ export class HkoLatestService {
                     .filter(v => v.split(',').length && parseInt(v.split(',')[0], 0))
                     .forEach(d => {
                         const [dateTime, location, temperature] = d.split(',');
+                        const momentedValue = moment(dateTime, 'YYYYMMDDHHmm');
                         jsonDataObj.push({
                             location,
-                            dateTime: moment(dateTime, 'YYYYMMDDHHmm').locale(langCode).format('LLL'),
+                            dateTime: {
+                                en: momentedValue.locale('en-au').format('LLL'),
+                                tc: momentedValue.locale('zh-tw').format('LLL'),
+                                sc: momentedValue.locale('zh-cn').format('LLL'),
+                            },
                             temperature
                         });
                     });
