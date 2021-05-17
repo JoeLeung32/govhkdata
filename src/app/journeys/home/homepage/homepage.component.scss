@@ -1,0 +1,12 @@
+@import "~src/assets/themes/default";
+
+::ng-deep body.shadowHeader {
+  .topbar {
+    @include box-shadow;
+    background-color: var(--transparent-bg-color);
+  }
+}
+
+.topHKO {
+  margin-top: 0 - $topBarHeight;
+}

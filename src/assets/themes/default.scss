@@ -1,13 +1,19 @@
 // colors
 $primary-bg-color: #fefefe;
 $primary-bg-color-dark: #333;
-$primary-bg-font-color: #333;
+$primary-bg-font-color: #111;
 $primary-bg-font-color-dark: #efefef;
 $secondary-bg-color: #fff;
 $secondary-bg-color-dark: #282828;
 $secondary-bg-font-color: #ccc;
 $secondary-bg-font-color-dark: #999;
 //$tertiary-bg-color:
+$primary-btn-color: #eee;
+$primary-btn-color-dark: #222;
+$primary-btn-font-color: #000;
+$primary-btn-font-color-dark: #fff;
+$transparent-bg-color: rgba(255, 255, 255, .5);
+$transparent-bg-color-dark: rgba(0, 0, 0, .25);
 
 // font
 
@@ -19,26 +25,25 @@ $leftRightSpacing: 24px;
 $colors: (
         --primary-bg-color: ($primary-bg-color, $primary-bg-color-dark),
         --primary-bg-font-color: ($primary-bg-font-color, $primary-bg-font-color-dark),
+        --primary-btn-color: ($primary-btn-color, $primary-btn-color-dark),
+        --primary-btn-font-color: ($primary-btn-font-color, $primary-btn-font-color-dark),
         --secondary-bg-color: ($secondary-bg-color, $secondary-bg-color-dark),
         --secondary-bg-font-color: ($secondary-bg-font-color, $secondary-bg-font-color-dark),
+        --transparent-bg-color: ($transparent-bg-color, $transparent-bg-color-dark),
 );
 
 // mixin
 
 @mixin page-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
   min-height: calc(100vh - #{$topBarHeight});
-
-  .auto-grow {
-    flex-grow: 1;
-    position: relative;
-  }
 }
 
 @mixin box-shadow {
   box-shadow: 0 0 10px rgba(0, 0, 0, .25);
+}
+
+@mixin text-shadow {
+  text-shadow: 0 0 10px rgba(0, 0, 0, .9);
 }
 
 // schema

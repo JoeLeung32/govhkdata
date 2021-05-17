@@ -1,25 +1,46 @@
+@import "~src/assets/themes/default";
+
 .slide {
-    .imgWrapper {
-        img {
-            max-width: 100%;
-        }
+  @include text-shadow;
+
+  .imgWrapper {
+    background-origin: border-box;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 370px;
+  }
+
+  .temperature {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    &--value {
+      font-size: 48px;
+      line-height: 100%;
     }
 
-    .temperature {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-
-        &--value {
-            font-size: 36px;
-            line-height: 100%;
-        }
-
-        &--format {
-            font-size: 14px;
-            line-height: 100%;
-            margin-left: .5em;
-        }
+    &--format {
+      font-size: 24px;
+      line-height: 100%;
+      margin-left: .5em;
     }
+  }
+}
+
+.button-group {
+  padding: 12px 24px;
+
+  button {
+    background-color: var(--primary-btn-color);
+    border: 0 none;
+    border-radius: 5px;
+    color: var(--primary-btn-font-color);
+    line-height: 100%;
+    margin: 4px 2px;
+    padding: 8px 12px;
+  }
 }

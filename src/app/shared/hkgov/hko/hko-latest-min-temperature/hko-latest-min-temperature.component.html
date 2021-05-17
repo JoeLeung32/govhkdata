@@ -9,15 +9,16 @@
         >
             <ng-container *ngFor="let slide of swiperData.getValue(); let idx = index">
                 <ng-template ngbSlide id="station{{idx}}">
-                    <div class="imgWrapper">
-                        <img [src]="'https://picsum.photos/id/'+(idx+970)+'/900/500'" alt="Random first slide">
-                    </div>
+                    <ng-container *ngIf="slide.station.img">
+                        <div class="imgWrapper" [ngStyle]="{'background-image': 'url('+slide.station.img+')'}"></div>
+                    </ng-container>
                     <div class="carousel-caption">
                         <div>
                             <div class="temperature">
                                 <span class="temperature--value">{{slide.data.temperature}}</span>
                                 <span class="temperature--format">°C</span>
                             </div>
+                            <div>{{slide.data.humidity}}</div>
                             <div class="station">{{slide.station[language]}}</div>
                             <div>
                                 <small>{{slide.data.dateTime[language]}}</small>
@@ -28,7 +29,7 @@
             </ng-container>
         </ngb-carousel>
     </div>
-    <div>
+    <div class="button-group d-flex flex-wrap justify-content-center">
         <ng-container *ngFor="let location of weatherStationList">
             <button (click)="onSlideTo(location['en'])">{{location[language]}}</button>
         </ng-container>
