@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import * as moment from 'moment';
 import {HttpService} from '../../http.service';
+import {LanguageService} from "../../language.service";
 
 interface ResponseType {
     latestMinTemperature: BehaviorSubject<any[]>;
@@ -260,7 +261,11 @@ export class HkoLatestService {
         latestMinTemperature: new BehaviorSubject<any[]>([]),
     };
     private bridge = 'https://www.chunkit.hk/to/govhk/csv.php?csv=';
+    /* https://data.weather.gov.hk/weatherAPI/doc/HKO_Open_Data_API_Documentation_tc.pdf */
     private resources = {
+        weather: 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType={{dataType}}&lang={{lang}}',
+        earthquake: 'https://data.weather.gov.hk/weatherAPI/opendata/earthquake.php',
+        opendata: 'https://data.weather.gov.hk/weatherAPI/opendata/opendata.php',
         latestMinTemperature: 'https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature.csv',
         latestMinHumidity: 'https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_humidity.csv',
         latestMinVisibility: 'https://data.weather.gov.hk/weatherAPI/opendata/opendata.php?dataType=LTMV&lang=en&rformat=csv',
@@ -268,6 +273,7 @@ export class HkoLatestService {
 
     constructor(
         private httpService: HttpService,
+        private languageService: LanguageService,
     ) {
     }
 
@@ -350,6 +356,101 @@ export class HkoLatestService {
                 }
             }
         });
+    }
+
+    requestLocalWeatherForecast(): void {
+        this.weatherAPI('flw').subscribe({
+            next: value => {
+                console.log(value.generalSituation); // 概況
+                console.log(value.tcInfo); // 熱帶氣旋資訊
+                console.log(value.fireDangerWarning); // 火災危險警告信息
+                console.log(value.forecastPeriod); // 預測時段
+                console.log(value.forecastDesc); // 預測內容
+                console.log(value.outlook); // 展望
+                console.log(value.updateTime); // 更新時間
+            }
+        });
+    }
+
+    requestNineDayForecast(): void {
+        this.weatherAPI('fnd').subscribe({
+            next: value => {
+                console.log(value.generalSituation); // 概況
+                console.log(value.seaTemp); // 海面溫度
+                console.log(value.soilTemp); // 土壤溫度
+                console.log(value.updateTime);
+                console.log(value.weatherForecast); // 天氣預報
+                // console.log(forecastDate); // 預報日期
+                // console.log(forecastWeather); // 預測天氣
+                // console.log(forecastMaxtemp); // 預測最高溫度
+                // console.log(forecastMintemp); // 預測最低溫度
+                // console.log(week); // 星期天數
+                // console.log(forecastWind); // 預測風向風速
+                // console.log(forecastMaxrh); // 預測最高相對濕度
+                // console.log(forecastMinrh); // 預測最低相對濕度
+                // console.log(ForecastIcon); // 預測天氣圖示
+                // console.log(PSR); // 顯著降雨概率
+            }
+        });
+    }
+
+    requestCurrentWeatherReport(): void {
+        this.weatherAPI('rhrread').subscribe({
+            next: value => {
+                console.log(value.lightning); // 閃電
+                console.log(value.rainfall); // 雨量
+                console.log(value.icon); // 圖示
+                console.log(value.iconUpdateTime); // 圖示更新時間
+                console.log(value.uvindex); // 紫外線指數
+                console.log(value.updateTime); // 更新時間
+                console.log(value.warningMessage); // 警告信息
+                console.log(value.rainstormReminder); // 暴雨警告提醒
+                console.log(value.specialWxTips); // 特別天氣提示
+                console.log(value.tcmessage); // 熱帶氣旋位置的消息
+                console.log(value.mintempFrom00To09); // 午夜至上午九時的最低溫度
+                console.log(value.rainfallFrom00To12); // 香港天文台從午夜至中午累計降雨量
+                console.log(value.rainfallLastMonth); // 上個月降雨量
+                console.log(value.rainfallJanuaryToLastMonth); // 一月至上月累計降雨量
+                console.log(value.temperature); // 分區氣溫
+                console.log(value.humidity); // 濕度
+            }
+        });
+    }
+
+    requestWeatherWarningSummary(): void {
+        this.weatherAPI('warnsum').subscribe({
+            next: value => {
+                console.log(value);
+            }
+        });
+    }
+
+    requestWeatherWarningInfo(): void {
+        this.weatherAPI('warningInfo').subscribe({
+            next: value => {
+                console.log(value);
+            }
+        });
+    }
+
+    requestSpecialWeatherTips(): void {
+        this.weatherAPI('swt').subscribe({
+            next: value => {
+                console.log(value);
+            }
+        });
+    }
+
+    private weatherAPI(dataType: 'flw' | 'fnd' | 'rhrread' | 'warnsum' | 'warningInfo' | 'swt'): Observable<any> {
+        const replace = (i, data) => {
+            return data[i.replace(/[{}]/g, '')];
+        };
+        const regex = /{{dataType}}|{{lang}}/g;
+        const url = this.resources.weather.replace(regex, i => replace(i, {
+            dataType,
+            lang: this.languageService.translate.currentLang,
+        }));
+        return this.httpService.getJson(url);
     }
 
 }
