@@ -1,12 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
+import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import {LanguageService} from '../../../../services/language.service';
 import {HkoLatestService, WeatherStation} from '../../../../services/hkgov/hko/hko-latest.service';
 
 @Component({
     selector: 'app-hko-latest-min-temperature',
     templateUrl: './hko-latest-min-temperature.component.html',
-    styleUrls: ['./hko-latest-min-temperature.component.scss']
+    styleUrls: ['./hko-latest-min-temperature.component.scss'],
+    providers: [NgbDropdownConfig]
 })
 export class HkoLatestMinTemperatureComponent implements OnInit {
 
@@ -18,9 +20,12 @@ export class HkoLatestMinTemperatureComponent implements OnInit {
     private swipeTimeout;
 
     constructor(
+        public ngbDropdownConfig: NgbDropdownConfig,
         private languageService: LanguageService,
         private hkoLatestService: HkoLatestService,
     ) {
+        ngbDropdownConfig.placement = 'top';
+        ngbDropdownConfig.autoClose = true;
         languageService.translate.onLangChange.subscribe(({lang}) => {
             this.language = lang;
         });

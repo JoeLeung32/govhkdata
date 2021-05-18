@@ -1,46 +1,93 @@
 @import "~src/assets/themes/default";
 
 .slide {
-  @include text-shadow;
+    @include text-shadow;
 
-  .imgWrapper {
-    background-origin: border-box;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 370px;
-  }
-
-  .temperature {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-
-    &--value {
-      font-size: 48px;
-      line-height: 100%;
+    .carousel-caption {
+        margin-bottom: 20px;
     }
 
-    &--format {
-      font-size: 24px;
-      line-height: 100%;
-      margin-left: .5em;
+    .imgWrapper {
+        background-origin: border-box;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 370px;
     }
-  }
+
+    .temperature {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+
+        &--value {
+            font-size: 48px;
+            line-height: 100%;
+        }
+
+        &--format {
+            font-size: 24px;
+            line-height: 100%;
+            margin-left: .5em;
+        }
+    }
 }
 
-.button-group {
-  padding: 12px 24px;
+.locationSelector {
+    margin-top: -50px;
 
-  button {
-    background-color: var(--primary-btn-color);
-    border: 0 none;
-    border-radius: 5px;
-    color: var(--primary-btn-font-color);
-    line-height: 100%;
-    margin: 4px 2px;
-    padding: 8px 12px;
-  }
+    button.dropdown-toggle {
+        background-color: var(--primary-bg-color);
+        border-color: var(--primary-bg-font-color);
+        color: var(--primary-bg-font-color);
+        outline: 0 none;
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .locationList {
+        overflow: hidden;
+        overflow-y: auto;
+        width: 200px;
+        height: 250px;
+
+        label {
+            cursor: pointer;
+            margin: 0;
+            width: 100%;
+        }
+
+        div {
+            transition: all .3s;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+
+            & + div {
+                //display: none;
+                margin: 0;
+                opacity: 0;
+                overflow: hidden;
+                height: 0;
+            }
+
+            &:checked {
+                & + div {
+                    //display: block;
+                    margin-top: 8px;
+                    margin-bottom: 8px;
+                    opacity: 1;
+                    height: 100%;
+                }
+            }
+        }
+
+        button {
+            white-space: normal;
+        }
+    }
 }

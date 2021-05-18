@@ -6,5 +6,9 @@
   "rightsReserved": "No rights reserved.",
   "home": "Index",
   "aboutUs": "About us",
-  "changelog": "Changelog"
+  "changelog": "Changelog",
+  "location": "Location",
+  "HongKongIsland": "Hong Kong Island",
+  "Kowloon": "Kowloon",
+  "NewTerritories": "New Territories"
 }
