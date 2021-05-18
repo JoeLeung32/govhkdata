@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import * as moment from 'moment';
 import {HttpService} from '../../http.service';
-import {LanguageService} from "../../language.service";
+import {LanguageService} from '../../language.service';
 
 interface ResponseType {
     latestMinTemperature: BehaviorSubject<any[]>;
