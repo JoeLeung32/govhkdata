@@ -100,6 +100,7 @@ class FTP {
                 await this.delay(1000)
                 this.#ftp.end()
                 console.log('FTP END')
+                console.log('Website: https://hkgovdata.chunkit.hk/')
             })
         })
     }
